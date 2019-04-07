@@ -3,6 +3,7 @@ using BancoLegal.Model.PessoaModel;
 using BancoLegal.Servico.Utilitario;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -63,8 +64,6 @@ namespace BancoLegal.Servico
             var controller = new Controller.ControllerPessoa();
             Pessoa pessoa = controller.GetPessoa(id);
 
-            //TODO consultar a pessoa e transformá-la em um arquivo txt e retornar para o usuário.
-
             var stringBuffer = new StringBuilder();
             stringBuffer
                 .Append(pessoa.Id.ToString().PadLeft(_metaDadoId.Tamanho, '0'))
@@ -72,6 +71,13 @@ namespace BancoLegal.Servico
                 .Append(pessoa.Cpf.PadRight(_metaDadoCpf.Tamanho))
                 .Append(pessoa.DataNascimento.ToString("dd/MM/yyyy"))
                 .Append(pessoa.Endereco.PadRight(_metaDadoEndereco.Tamanho));
+
+            string caminho = string.Concat(Environment.CurrentDirectory, @"\pessoas.txt");
+            using (StreamWriter file = new StreamWriter(caminho))
+            {
+                file.Write(stringBuffer.ToString());
+                Console.WriteLine("Arquivo salvo em " + caminho);
+            }
 
             return stringBuffer.ToString();
         }

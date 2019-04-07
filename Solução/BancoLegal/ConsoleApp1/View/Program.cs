@@ -16,7 +16,7 @@ namespace BancoLegal.View
 
             while (escolha != 0)
             {
-                Console.WriteLine("Escolha uma opção:");
+                Console.WriteLine("\nEscolha uma opção:");
                 Console.WriteLine("1 - Enviar pessoa");
                 Console.WriteLine("2 - Enviar conta");
                 Console.WriteLine("3 - Consultar pessoa");
