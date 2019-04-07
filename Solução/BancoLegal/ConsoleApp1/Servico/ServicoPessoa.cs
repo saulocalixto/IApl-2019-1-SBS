@@ -45,15 +45,15 @@ namespace BancoLegal.Servico
             {
                 Pessoa pessoa = new Pessoa();
                 var posicaoInicial = 0;
-                pessoa.Id = _utilitarioDeImportacao.converteDado(_metaDadoId.Tipo, linha.Substring(0, _metaDadoId.Tamanho).Trim());
+                pessoa.Id = _utilitarioDeImportacao.ConverteDado(_metaDadoId.Tipo, linha.Substring(0, _metaDadoId.Tamanho).Trim());
                 posicaoInicial += _metaDadoId.Tamanho;
-                pessoa.Nome = _utilitarioDeImportacao.converteDado(_metaDadoNome.Tipo, linha.Substring(posicaoInicial, _metaDadoNome.Tamanho).Trim());
+                pessoa.Nome = _utilitarioDeImportacao.ConverteDado(_metaDadoNome.Tipo, linha.Substring(posicaoInicial, _metaDadoNome.Tamanho).Trim());
                 posicaoInicial += (_metaDadoNome.Tamanho);
-                pessoa.Cpf = _utilitarioDeImportacao.converteDado(_metaDadoCpf.Tipo, linha.Substring(posicaoInicial, _metaDadoCpf.Tamanho).Trim());
+                pessoa.Cpf = _utilitarioDeImportacao.ConverteDado(_metaDadoCpf.Tipo, linha.Substring(posicaoInicial, _metaDadoCpf.Tamanho).Trim());
                 posicaoInicial += _metaDadoCpf.Tamanho;
-                pessoa.DataNascimento = _utilitarioDeImportacao.converteDado(_metaDadoDataNascimento.Tipo, linha.Substring(posicaoInicial, _metaDadoDataNascimento.Tamanho).Trim());
+                pessoa.DataNascimento = _utilitarioDeImportacao.ConverteDado(_metaDadoDataNascimento.Tipo, linha.Substring(posicaoInicial, _metaDadoDataNascimento.Tamanho).Trim());
                 posicaoInicial += _metaDadoDataNascimento.Tamanho;
-                pessoa.Endereco = _utilitarioDeImportacao.converteDado(_metaDadoEndereco.Tipo, linha.Substring(posicaoInicial, _metaDadoEndereco.Tamanho - 1).Trim());
+                pessoa.Endereco = _utilitarioDeImportacao.ConverteDado(_metaDadoEndereco.Tipo, linha.Substring(posicaoInicial, _metaDadoEndereco.Tamanho - 1).Trim());
                 pessoas.Add(pessoa);
             }
 
@@ -66,8 +66,13 @@ namespace BancoLegal.Servico
 
         public string Consulte(int id)
         {
-            var controller = new Controller.ControllerPessoa();
+            var controller = new ControllerPessoa();
             Pessoa pessoa = controller.GetPessoa(id);
+
+            if (pessoa == null || pessoa.Id != id)
+            {
+                return "Essa pessoa não existe!";
+            }
 
             var stringBuffer = new StringBuilder();
             stringBuffer

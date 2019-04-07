@@ -1,8 +1,6 @@
-﻿using BancoLegal.Model;
-using BancoLegal.Model.DataAnnotations;
+﻿using BancoLegal.Model.DataAnnotations;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BancoLegal.Servico.Utilitario
 {
@@ -22,7 +20,7 @@ namespace BancoLegal.Servico.Utilitario
             return listaImportacao;
         }
 
-        public dynamic converteDado(TiposEnum tipo, string dado)
+        public dynamic ConverteDado(TiposEnum tipo, string dado)
         {
             switch (tipo)
             {
@@ -33,7 +31,7 @@ namespace BancoLegal.Servico.Utilitario
                 case TiposEnum.Data:
                     return DateTime.Parse(dado);
                 case TiposEnum.Decimal:
-                    return double.Parse(dado);
+                    return decimal.Parse(dado);
                 case TiposEnum.Numerico:
                     return int.Parse(dado);
                 default:

@@ -1,8 +1,10 @@
-﻿using BancoLegal.Model.ContaModel;
+﻿using BancoLegal.Controller;
+using BancoLegal.Model.ContaModel;
 using BancoLegal.Model.DataAnnotations;
 using BancoLegal.Servico.Utilitario;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -49,38 +51,34 @@ namespace BancoLegal.Servico
             {
                 ContaCorrente conta = new ContaCorrente();
                 var posicaoInicial = 0;
-                conta.Id = _utilitarioDeImportacao.converteDado(_metaDadoId.Tipo, linha.Substring(0, _metaDadoId.Tamanho).Trim());
+                conta.Id = _utilitarioDeImportacao.ConverteDado(_metaDadoId.Tipo, linha.Substring(0, _metaDadoId.Tamanho).Trim());
                 posicaoInicial += _metaDadoId.Tamanho;
-                conta.Titular = _utilitarioDeImportacao.converteDado(_metaDadoTitular.Tipo, linha.Substring(posicaoInicial, _metaDadoTitular.Tamanho).Trim());
+                conta.Titular = _utilitarioDeImportacao.ConverteDado(_metaDadoTitular.Tipo, linha.Substring(posicaoInicial, _metaDadoTitular.Tamanho).Trim());
                 posicaoInicial += (_metaDadoTitular.Tamanho);
-                conta.Agencia = _utilitarioDeImportacao.converteDado(_metaDadoAgencia.Tipo, linha.Substring(posicaoInicial, _metaDadoAgencia.Tamanho).Trim());
+                conta.Agencia = _utilitarioDeImportacao.ConverteDado(_metaDadoAgencia.Tipo, linha.Substring(posicaoInicial, _metaDadoAgencia.Tamanho).Trim());
                 posicaoInicial += _metaDadoAgencia.Tamanho;
-                conta.Numero = _utilitarioDeImportacao.converteDado(_metaDadoNumero.Tipo, linha.Substring(posicaoInicial, _metaDadoNumero.Tamanho).Trim());
+                conta.Numero = _utilitarioDeImportacao.ConverteDado(_metaDadoNumero.Tipo, linha.Substring(posicaoInicial, _metaDadoNumero.Tamanho).Trim());
                 posicaoInicial += _metaDadoNumero.Tamanho;
-                conta.Senha = _utilitarioDeImportacao.converteDado(_metaDadoSenha.Tipo, linha.Substring(posicaoInicial, _metaDadoSenha.Tamanho - 1).Trim());
+                conta.Senha = _utilitarioDeImportacao.ConverteDado(_metaDadoSenha.Tipo, linha.Substring(posicaoInicial, _metaDadoSenha.Tamanho - 1).Trim());
                 posicaoInicial += _metaDadoSenha.Tamanho;
-                conta.Saldo = _utilitarioDeImportacao.converteDado(_metaDadoSaldo.Tipo, linha.Substring(posicaoInicial, _metaDadoSaldo.Tamanho - 1).Trim());
+                conta.Saldo = _utilitarioDeImportacao.ConverteDado(_metaDadoSaldo.Tipo, linha.Substring(posicaoInicial, _metaDadoSaldo.Tamanho - 1).Trim());
                 posicaoInicial += _metaDadoSaldo.Tamanho;
-                conta.Limite = _utilitarioDeImportacao.converteDado(_metaDadoLimite.Tipo, linha.Substring(posicaoInicial, _metaDadoLimite.Tamanho - 1).Trim());
+                conta.Limite = _utilitarioDeImportacao.ConverteDado(_metaDadoLimite.Tipo, linha.Substring(posicaoInicial, _metaDadoLimite.Tamanho - 1).Trim());
                 posicaoInicial += _metaDadoLimite.Tamanho;
-                conta.Ativo = _utilitarioDeImportacao.converteDado(_metaDadoStatus.Tipo, linha.Substring(posicaoInicial, _metaDadoStatus.Tamanho - 1).Trim());
+                conta.Ativo = _utilitarioDeImportacao.ConverteDado(_metaDadoStatus.Tipo, linha.Substring(posicaoInicial, _metaDadoStatus.Tamanho - 1).Trim());
                 pessoas.Add(conta);
             }
         }
 
         public string Consulte(int Id)
         {
-            var conta = new ContaCorrente
+            ControllerContaCorrente controller = new ControllerContaCorrente();
+            ContaCorrente conta = controller.GetContaCorrente(Id);
+
+            if (conta == null || Id != conta.Id)
             {
-                Id = 1,
-                Agencia = 3536,
-                Numero = 45216,
-                Limite = 50000.00,
-                Saldo = 300.22,
-                Senha = 4546,
-                Ativo = true,
-                Titular = 1
-            };
+                return "Essa conta não existe!";
+            }
 
             var stringBuffer = new StringBuilder();
 
@@ -92,6 +90,13 @@ namespace BancoLegal.Servico
                 .Append(conta.Saldo.ToString().PadRight(_metaDadoSaldo.Tamanho))
                 .Append(conta.Limite.ToString().PadRight(_metaDadoLimite.Tamanho))
                 .Append(conta.Ativo ? 'S' : 'N');
+
+            string caminho = string.Concat(Environment.CurrentDirectory, @"\contas.txt");
+            using (StreamWriter file = new StreamWriter(caminho))
+            {
+                file.Write(stringBuffer.ToString());
+                Console.WriteLine("Arquivo salvo em " + caminho);
+            }
 
             return stringBuffer.ToString();
         }
