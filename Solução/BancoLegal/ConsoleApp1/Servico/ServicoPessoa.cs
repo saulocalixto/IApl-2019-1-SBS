@@ -18,7 +18,6 @@ namespace BancoLegal.Servico
 
         private UtilitarioDeImportacao _utilitarioDeImportacao;
 
-
         public ServicoPessoa()
         {
             _utilitarioDeImportacao = new UtilitarioDeImportacao();
@@ -38,7 +37,7 @@ namespace BancoLegal.Servico
 
             List<Pessoa> pessoas = new List<Pessoa>();
 
-            foreach(var linha in linhas)
+            foreach (var linha in linhas)
             {
                 Pessoa pessoa = new Pessoa();
                 var posicaoInicial = 0;
