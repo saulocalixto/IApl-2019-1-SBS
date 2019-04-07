@@ -58,19 +58,12 @@ namespace BancoLegal.Servico
             // TODO gravar lista no banco
         }
 
-        public string Consulte(int Id)
+        public string Consulte(int id)
         {
+            var controller = new Controller.ControllerPessoa();
+            Pessoa pessoa = controller.GetPessoa(id);
 
             //TODO consultar a pessoa e transformá-la em um arquivo txt e retornar para o usuário.
-
-            var pessoa = new Pessoa
-            {
-                Id = 1,
-                Nome = "Saulo Calixto",
-                Cpf = "03845930110",
-                DataNascimento = DateTime.Now,
-                Endereco = "Ruas das orquídias num bairro orquideoso"
-            };
 
             var stringBuffer = new StringBuilder();
             stringBuffer
