@@ -1,8 +1,5 @@
-﻿using BancoLegal.Model.ContaModel;
-using BancoLegal.Servico;
-using BancoLegal.Servico.Utilitario;
+﻿using BancoLegal.Servico;
 using System;
-using System.Collections.Generic;
 
 namespace BancoLegal.View
 {
@@ -11,6 +8,7 @@ namespace BancoLegal.View
         static void Main(string[] args)
         {
             var servicoPessoa = new ServicoPessoa();
+            var servicoConta = new ServicoContaCorrente();
 
             Console.WriteLine("Seja muito bem vindo ao banco legal!");
 
@@ -26,23 +24,30 @@ namespace BancoLegal.View
                 Console.WriteLine("0 - Sair");
 
                 escolha = Int32.Parse(Console.ReadLine());
+                int id;
+                String caminho;
 
                 switch (escolha)
                 {
                     case 1:
                         Console.WriteLine("Digite o caminho completo onde o arquivo de importação se encontra:");
-                        var caminho = Console.ReadLine();
-
+                        caminho = Console.ReadLine();
                         servicoPessoa.CarregaArquivo(caminho);
                         break;
                     case 2:
+                        Console.WriteLine("Digite o caminho completo onde o arquivo de importação se encontra:");
+                        caminho = Console.ReadLine();
+                        servicoConta.CarregaArquivo(caminho);
                         break;
                     case 3:
                         Console.WriteLine("Digite o id da pessoa consultada:");
-                        var id = Int32.Parse(Console.ReadLine());
+                        id = Int32.Parse(Console.ReadLine());
                         Console.WriteLine(servicoPessoa.Consulte(id));
                         break;
                     case 4:
+                        Console.WriteLine("Digite o id da conta consultada:");
+                        id = Int32.Parse(Console.ReadLine());
+                        Console.WriteLine(servicoConta.Consulte(id));
                         break;
                 }
             }

@@ -15,6 +15,7 @@ namespace BancoLegal.Servico
         private Importacao _metaDadoCpf;
         private Importacao _metaDadoDataNascimento;
         private Importacao _metaDadoEndereco;
+        private Importacao _metaDadoId;
 
         private UtilitarioDeImportacao _utilitarioDeImportacao;
 
@@ -27,6 +28,7 @@ namespace BancoLegal.Servico
             _metaDadoCpf = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Cpf");
             _metaDadoDataNascimento = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Data de Nascimento");
             _metaDadoEndereco = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Endereco");
+            _metaDadoId = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Id");
         }
 
         public void CarregaArquivo(string caminhoArquivo)
@@ -41,7 +43,9 @@ namespace BancoLegal.Servico
             {
                 Pessoa pessoa = new Pessoa();
                 var posicaoInicial = 0;
-                pessoa.Nome = _utilitarioDeImportacao.converteDado(_metaDadoNome.Tipo, linha.Substring(0, _metaDadoNome.Tamanho).Trim());
+                pessoa.Id = _utilitarioDeImportacao.converteDado(_metaDadoId.Tipo, linha.Substring(0, _metaDadoId.Tamanho).Trim());
+                posicaoInicial += _metaDadoId.Tamanho;
+                pessoa.Nome = _utilitarioDeImportacao.converteDado(_metaDadoNome.Tipo, linha.Substring(posicaoInicial, _metaDadoNome.Tamanho).Trim());
                 posicaoInicial += (_metaDadoNome.Tamanho);
                 pessoa.Cpf = _utilitarioDeImportacao.converteDado(_metaDadoCpf.Tipo, linha.Substring(posicaoInicial, _metaDadoCpf.Tamanho).Trim());
                 posicaoInicial += _metaDadoCpf.Tamanho;
@@ -61,6 +65,7 @@ namespace BancoLegal.Servico
 
             var pessoa = new Pessoa
             {
+                Id = 1,
                 Nome = "Saulo Calixto",
                 Cpf = "03845930110",
                 DataNascimento = DateTime.Now,
@@ -68,7 +73,9 @@ namespace BancoLegal.Servico
             };
 
             var stringBuffer = new StringBuilder();
-            stringBuffer.Append(pessoa.Nome.PadRight(_metaDadoNome.Tamanho))
+            stringBuffer
+                .Append(pessoa.Id.ToString().PadLeft(_metaDadoId.Tamanho, '0'))
+                .Append(pessoa.Nome.PadRight(_metaDadoNome.Tamanho))
                 .Append(pessoa.Cpf.PadRight(_metaDadoCpf.Tamanho))
                 .Append(pessoa.DataNascimento.ToString("dd/MM/yyyy"))
                 .Append(pessoa.Endereco.PadRight(_metaDadoEndereco.Tamanho));

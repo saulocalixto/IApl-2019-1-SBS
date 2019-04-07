@@ -33,9 +33,9 @@ namespace BancoLegal.Servico.Utilitario
                 case TiposEnum.Data:
                     return DateTime.Parse(dado);
                 case TiposEnum.Decimal:
-                    return Double.Parse(dado);
+                    return double.Parse(dado);
                 case TiposEnum.Numerico:
-                    return Int64.Parse(dado);
+                    return int.Parse(dado);
                 default:
                     return dado;
 
