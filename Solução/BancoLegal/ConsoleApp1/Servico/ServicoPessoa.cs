@@ -14,7 +14,7 @@ namespace BancoLegal.Servico
 
             //var linhas = utilitarioLeitor.RetorneLinhas();
 
-            var linhas = new List<string> { "Saulo Calixto                          0384593011017/09/1990Rua Vitória Régia n 249 Bl b3 Apto 304 " };
+            var linhas = new List<string> { "Saulo Calixto                                                                                      0384593011017/09/1990Rua Vitória Régia n 249 Bl b3 Apto 304                                                              " };
 
             var metaDados = utilitarioImportacao.RetorneMetaDados<Pessoa>();
 
@@ -25,7 +25,7 @@ namespace BancoLegal.Servico
 
             List<Pessoa> pessoas = new List<Pessoa>();
 
-            foreach(var linha in linhas)
+            foreach (var linha in linhas)
             {
                 Pessoa pessoa = new Pessoa();
                 var posicaoInicial = 0;
