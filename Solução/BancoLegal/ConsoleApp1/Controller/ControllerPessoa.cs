@@ -45,5 +45,31 @@ namespace BancoLegal.Controller
             }
             return p;
         }
+
+        public void CadastrarPessoa(Pessoa p)
+        {
+            try
+            {
+                using (var conn = new MySqlConnection(stringConexao))
+                {
+                    conn.Open();
+
+                    using (var cmd = new MySqlCommand(
+                        "Insert into PESSOA (ID, NOME, CPF, DATANASCIMENTO, ENDERECO) Values (@id, @nome, @cpf, @data, @endereco);", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", p.Id);
+                        cmd.Parameters.AddWithValue("@nome", p.Nome);
+                        cmd.Parameters.AddWithValue("@cpf", p.Cpf);
+                        cmd.Parameters.AddWithValue("@data", p.DataNascimento);
+                        cmd.Parameters.AddWithValue("@endereco", p.Endereco);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
     }
 }

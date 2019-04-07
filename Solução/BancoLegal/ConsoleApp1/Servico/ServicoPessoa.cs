@@ -1,4 +1,5 @@
-﻿using BancoLegal.Model.DataAnnotations;
+﻿using BancoLegal.Controller;
+using BancoLegal.Model.DataAnnotations;
 using BancoLegal.Model.PessoaModel;
 using BancoLegal.Servico.Utilitario;
 using System;
@@ -56,7 +57,11 @@ namespace BancoLegal.Servico
                 pessoas.Add(pessoa);
             }
 
-            // TODO gravar lista no banco
+            ControllerPessoa controller = new ControllerPessoa();
+            foreach (var pessoa in pessoas)
+            {
+                controller.CadastrarPessoa(pessoa);
+            }
         }
 
         public string Consulte(int id)
