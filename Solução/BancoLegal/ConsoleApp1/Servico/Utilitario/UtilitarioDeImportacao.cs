@@ -42,10 +42,5 @@ namespace BancoLegal.Servico.Utilitario
             }
         }
 
-        public int retornaTamanhoDaPropriedade(object propriedade)
-        {
-            return (propriedade.GetType().GetCustomAttributes(true)[0] as Importacao).Tamanho;
-        }
-
     }
 }

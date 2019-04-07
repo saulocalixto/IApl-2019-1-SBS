@@ -14,10 +14,13 @@ namespace BancoLegal.Servico.Utilitario
 
         public UtilitarioLeitorDeArquivo(string caminhoArquivo)
         {
+            _caminhoArquivo = caminhoArquivo;
+            _linhas = new List<string>();
+
             try
             {
                 _entrada = File.Open(caminhoArquivo, FileMode.Open);
-                _leitor = new StreamReader(_entrada);
+                _leitor = new StreamReader(_entrada, Encoding.UTF8);
             }
             catch (FileNotFoundException)
             {
