@@ -1,0 +1,44 @@
+﻿Layout Pessoa
+
+[Importacao(NomeCampo = "Nome Titular", Tamanho = 100, Posicao = 2, Tipo = Texto)]
+Nome
+
+[Importacao(NomeCampo = "Cpf", Tamanho = 11, Posicao = 3, Tipo = Texto)]
+Cpf
+
+[Importacao(NomeCampo = "Data de Nascimento", Tamanho = 10, Posicao = 4, Tipo = Data)]
+DateTime DataNascimento
+
+[Importacao(NomeCampo = "Endereco", Tamanho = 100, Posicao = 5, Tipo = Texto)]
+Endereco
+
+Ex.:
+
+00001Saulo Calixto                                                                                       0384593011007/04/2019Ruas das orquídias num bairro orquideoso                                                            
+
+Layout Conta
+
+[Importacao(NomeCampo = "Titular", Tamanho = 5, Posicao = 2, Tipo = Texto)]
+Titular
+
+[Importacao(NomeCampo = "Agência", Tamanho = 5, Posicao = 3, Tipo = Numerico)]
+Agencia
+
+[Importacao(NomeCampo = "Número", Tamanho = 10, Posicao = 4, Tipo = Numerico)]
+Numero
+
+[Importacao(NomeCampo = "Senha", Tamanho = 40, Posicao = 5, Tipo = Texto)]
+Senha
+
+[Importacao(NomeCampo = "Saldo", Tamanho = 20, Posicao = 6, Tipo = Decimal)]
+Saldo
+
+[Importacao(NomeCampo = "Limite", Tamanho = 20, Posicao = 7, Tipo = Decimal)]
+Limite
+
+[Importacao(NomeCampo = "Ativo", Tamanho = 1, Posicao = 8, Tipo = Booleano)]
+Ativo
+
+Ex:.
+
+00001000013536 45216     4546                                    300,22              50000               S
