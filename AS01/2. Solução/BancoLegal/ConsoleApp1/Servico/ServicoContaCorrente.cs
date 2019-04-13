@@ -1,4 +1,4 @@
-﻿using BancoLegal.Controller;
+﻿using BancoLegal.BancoDeDados.Repositorio;
 using BancoLegal.Model.ContaModel;
 using BancoLegal.Model.DataAnnotations;
 using BancoLegal.Servico.Utilitario;
@@ -10,9 +10,8 @@ using System.Text;
 
 namespace BancoLegal.Servico
 {
-    class ServicoContaCorrente : IServico<ContaCorrente>
+    public class ServicoContaCorrente : ServicoPadrao<ContaCorrente>
     {
-        private IList<Importacao> _listaMetaDados;
         private Importacao _metaDadoTitular;
         private Importacao _metaDadoAgencia;
         private Importacao _metaDadoNumero;
@@ -22,13 +21,25 @@ namespace BancoLegal.Servico
         private Importacao _metaDadoStatus;
         private Importacao _metaDadoId;
 
-        private UtilitarioDeImportacao _utilitarioDeImportacao;
-
-        public ServicoContaCorrente()
+        protected override void ConvertaObjetoEmArquivo(ContaCorrente objeto, StringBuilder stringBuffer)
         {
-            _utilitarioDeImportacao = new UtilitarioDeImportacao();
-            _listaMetaDados = _utilitarioDeImportacao.RetorneMetaDados<ContaCorrente>();
+            stringBuffer.Append(objeto.Id.ToString().PadLeft(_metaDadoId.Tamanho, '0'))
+                .Append(objeto.Titular.ToString().PadLeft(_metaDadoTitular.Tamanho, '0'))
+                .Append(objeto.Agencia.ToString().PadRight(_metaDadoAgencia.Tamanho))
+                .Append(objeto.Numero.ToString().PadRight(_metaDadoNumero.Tamanho))
+                .Append(objeto.Senha.ToString().PadRight(_metaDadoSenha.Tamanho))
+                .Append(objeto.Saldo.ToString().PadRight(_metaDadoSaldo.Tamanho))
+                .Append(objeto.Limite.ToString().PadRight(_metaDadoLimite.Tamanho))
+                .Append(objeto.Ativo ? 'S' : 'N');
+        }
 
+        protected override string NomeArquivo()
+        {
+            return "conta";
+        }
+
+        protected override void PreencheMetaDados()
+        {
             _metaDadoId = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Id");
             _metaDadoTitular = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Titular");
             _metaDadoAgencia = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Agência");
@@ -39,13 +50,14 @@ namespace BancoLegal.Servico
             _metaDadoSaldo = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Saldo");
         }
 
-        public void CarregaArquivo(string caminhoArquivo)
+        protected override RepositorioPadrao<ContaCorrente> Repositorio()
         {
-            var utilitarioLeitor = new UtilitarioLeitorDeArquivo(caminhoArquivo);
+            return _repositorio ?? (_repositorio = new RepositorioContaCorrente());
+        }
 
-            var linhas = utilitarioLeitor.RetorneLinhas();
-
-            List<ContaCorrente> pessoas = new List<ContaCorrente>();
+        protected override List<ContaCorrente> RetorneObjetosDeArquivo(List<string> linhas)
+        {
+            List<ContaCorrente> contasCorrente = new List<ContaCorrente>();
 
             foreach (var linha in linhas)
             {
@@ -66,44 +78,10 @@ namespace BancoLegal.Servico
                 conta.Limite = _utilitarioDeImportacao.ConverteDado(_metaDadoLimite.Tipo, linha.Substring(posicaoInicial, _metaDadoLimite.Tamanho - 1).Trim());
                 posicaoInicial += _metaDadoLimite.Tamanho;
                 conta.Ativo = _utilitarioDeImportacao.ConverteDado(_metaDadoStatus.Tipo, linha.Substring(posicaoInicial, _metaDadoStatus.Tamanho - 1).Trim());
-                pessoas.Add(conta);
-            }
-        }
-
-        public string Consulte(int Id)
-        {
-            ControllerContaCorrente controller = new ControllerContaCorrente();
-            ContaCorrente conta = controller.GetContaCorrente(Id);
-
-            if (conta == null || Id != conta.Id)
-            {
-                return "Essa conta não existe!";
+                contasCorrente.Add(conta);
             }
 
-            var stringBuffer = new StringBuilder();
-
-            stringBuffer.Append(conta.Id.ToString().PadLeft(_metaDadoId.Tamanho, '0'))
-                .Append(conta.Titular.ToString().PadLeft(_metaDadoTitular.Tamanho, '0'))
-                .Append(conta.Agencia.ToString().PadRight(_metaDadoAgencia.Tamanho))
-                .Append(conta.Numero.ToString().PadRight(_metaDadoNumero.Tamanho))
-                .Append(conta.Senha.ToString().PadRight(_metaDadoSenha.Tamanho))
-                .Append(conta.Saldo.ToString().PadRight(_metaDadoSaldo.Tamanho))
-                .Append(conta.Limite.ToString().PadRight(_metaDadoLimite.Tamanho))
-                .Append(conta.Ativo ? 'S' : 'N');
-
-            string caminho = string.Concat(Environment.CurrentDirectory, @"\contas.txt");
-            using (StreamWriter file = new StreamWriter(caminho))
-            {
-                file.Write(stringBuffer.ToString());
-                Console.WriteLine("Arquivo salvo em " + caminho);
-            }
-
-            return stringBuffer.ToString();
-        }
-
-        public string EmiteLayout()
-        {
-            throw new NotImplementedException();
+            return contasCorrente;
         }
     }
 }

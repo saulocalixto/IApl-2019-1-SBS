@@ -24,29 +24,29 @@ namespace BancoLegal.View
                 Console.WriteLine("0 - Sair");
 
                 escolha = Int32.Parse(Console.ReadLine());
-                int id;
-                String caminho;
+                var id = 0;
+                string caminho;
 
                 switch (escolha)
                 {
                     case 1:
                         Console.WriteLine("Digite o caminho completo onde o arquivo de importação se encontra:");
                         caminho = Console.ReadLine();
-                        servicoPessoa.CarregaArquivo(caminho);
+                        servicoPessoa.ImporteArquivo(caminho);
                         break;
                     case 2:
                         Console.WriteLine("Digite o caminho completo onde o arquivo de importação se encontra:");
                         caminho = Console.ReadLine();
-                        servicoConta.CarregaArquivo(caminho);
+                        servicoConta.ImporteArquivo(caminho);
                         break;
                     case 3:
                         Console.WriteLine("Digite o id da pessoa consultada:");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = int.Parse(Console.ReadLine());
                         Console.WriteLine(servicoPessoa.Consulte(id));
                         break;
                     case 4:
                         Console.WriteLine("Digite o id da conta consultada:");
-                        id = Int32.Parse(Console.ReadLine());
+                        id = int.Parse(Console.ReadLine());
                         Console.WriteLine(servicoConta.Consulte(id));
                         break;
                 }

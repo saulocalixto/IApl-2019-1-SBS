@@ -1,4 +1,4 @@
-﻿using BancoLegal.Controller;
+﻿using BancoLegal.BancoDeDados.Repositorio;
 using BancoLegal.Model.DataAnnotations;
 using BancoLegal.Model.PessoaModel;
 using BancoLegal.Servico.Utilitario;
@@ -10,22 +10,31 @@ using System.Text;
 
 namespace BancoLegal.Servico
 {
-    public class ServicoPessoa : IServico<Pessoa>
+    public class ServicoPessoa : ServicoPadrao<Pessoa>
     {
-        private IList<Importacao> _listaMetaDados;
         private Importacao _metaDadoNome;
         private Importacao _metaDadoCpf;
         private Importacao _metaDadoDataNascimento;
         private Importacao _metaDadoEndereco;
         private Importacao _metaDadoId;
 
-        private UtilitarioDeImportacao _utilitarioDeImportacao;
-
-        public ServicoPessoa()
+        protected override void ConvertaObjetoEmArquivo(Pessoa objeto, StringBuilder stringBuffer)
         {
-            _utilitarioDeImportacao = new UtilitarioDeImportacao();
-            _listaMetaDados = _utilitarioDeImportacao.RetorneMetaDados<Pessoa>();
+            stringBuffer
+                .Append(objeto.Id.ToString().PadLeft(_metaDadoId.Tamanho, '0'))
+                .Append(objeto.Nome.PadRight(_metaDadoNome.Tamanho))
+                .Append(objeto.Cpf.PadRight(_metaDadoCpf.Tamanho))
+                .Append(objeto.DataNascimento.ToString("dd/MM/yyyy"))
+                .Append(objeto.Endereco.PadRight(_metaDadoEndereco.Tamanho));
+        }
 
+        protected override string NomeArquivo()
+        {
+            return "pessoas";
+        }
+
+        protected override void PreencheMetaDados()
+        {
             _metaDadoNome = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Nome Titular");
             _metaDadoCpf = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Cpf");
             _metaDadoDataNascimento = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Data de Nascimento");
@@ -33,12 +42,13 @@ namespace BancoLegal.Servico
             _metaDadoId = _listaMetaDados.FirstOrDefault(x => x.NomeCampo == "Id");
         }
 
-        public void CarregaArquivo(string caminhoArquivo)
+        protected override RepositorioPadrao<Pessoa> Repositorio()
         {
-            var utilitarioLeitor = new UtilitarioLeitorDeArquivo(caminhoArquivo);
+            return _repositorio ?? (_repositorio = new RepositorioPessoa());
+        }
 
-            var linhas = utilitarioLeitor.RetorneLinhas();
-
+        protected override List<Pessoa> RetorneObjetosDeArquivo(List<string> linhas)
+        {
             List<Pessoa> pessoas = new List<Pessoa>();
 
             foreach (var linha in linhas)
@@ -57,45 +67,7 @@ namespace BancoLegal.Servico
                 pessoas.Add(pessoa);
             }
 
-            ControllerPessoa controller = new ControllerPessoa();
-            foreach (var pessoa in pessoas)
-            {
-                controller.CadastrarPessoa(pessoa);
-            }
-        }
-
-        public string Consulte(int id)
-        {
-            var controller = new ControllerPessoa();
-            Pessoa pessoa = controller.GetPessoa(id);
-
-            if (pessoa == null || pessoa.Id != id)
-            {
-                return "Essa pessoa não existe!";
-            }
-
-            var stringBuffer = new StringBuilder();
-            stringBuffer
-                .Append(pessoa.Id.ToString().PadLeft(_metaDadoId.Tamanho, '0'))
-                .Append(pessoa.Nome.PadRight(_metaDadoNome.Tamanho))
-                .Append(pessoa.Cpf.PadRight(_metaDadoCpf.Tamanho))
-                .Append(pessoa.DataNascimento.ToString("dd/MM/yyyy"))
-                .Append(pessoa.Endereco.PadRight(_metaDadoEndereco.Tamanho));
-
-            string caminho = string.Concat(Environment.CurrentDirectory, @"\pessoas.txt");
-            using (StreamWriter file = new StreamWriter(caminho))
-            {
-                file.Write(stringBuffer.ToString());
-                Console.WriteLine("Arquivo salvo em " + caminho);
-            }
-
-            return stringBuffer.ToString();
-        }
-
-        public string EmiteLayout()
-        {
-            // TODO MontarLayout
-            throw new NotImplementedException();
+            return pessoas;
         }
     }
 }

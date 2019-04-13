@@ -1,6 +1,6 @@
-﻿namespace BancoLegal.Controller
+﻿namespace BancoLegal.BancoDeDados
 {
-    class ConexaoBanco
+    public class ConexaoBanco
     {
         public readonly string stringConexao;
 
