@@ -4,8 +4,8 @@ namespace BancoLegal.Model.ContaModel
 {
     public abstract class ContaPadrao : ObjetoPadrao
     {
-        [Importacao(NomeCampo = "Titular", Tamanho = 5, Posicao = 2, Tipo = TiposEnum.Texto)]
-        public string Titular { get; set; }
+        [Importacao(NomeCampo = "Titular", Tamanho = 5, Posicao = 2, Tipo = TiposEnum.Numerico)]
+        public int Titular { get; set; }
 
         [Importacao(NomeCampo = "Agência", Tamanho = 5, Posicao = 3, Tipo = TiposEnum.Numerico)]
         public int Agencia { get; set; }

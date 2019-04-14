@@ -24,10 +24,10 @@ namespace BancoLegal.BancoDeDados.Repositorio
             ContaCorrente conta = new ContaCorrente();
             while (reader.Read())
             {
-                conta.Id = int.Parse(reader.GetString(0));
+                conta.Id = reader.GetInt32(0);
                 conta.Numero = reader.GetInt32(1);
                 conta.Agencia = reader.GetInt32(2);
-                conta.Titular = reader.GetString(3);
+                conta.Titular = reader.GetInt32(3);
                 conta.Senha = reader.GetString(4);
                 conta.Saldo = reader.GetDecimal(5);
                 conta.Limite = reader.GetDecimal(6);

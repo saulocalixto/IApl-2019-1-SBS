@@ -22,7 +22,7 @@ namespace BancoLegal.BancoDeDados.Repositorio
             Pessoa pessoa = new Pessoa();
             while (reader.Read())
             {
-                pessoa.Id = int.Parse(reader.GetString(0));
+                pessoa.Id = reader.GetInt32(0);
                 pessoa.Nome = reader.GetString(1);
                 pessoa.Cpf = reader.GetString(2);
                 pessoa.DataNascimento = reader.GetDateTime(3);

@@ -13,7 +13,6 @@ namespace BancoLegal.Servico
     {
         #region PROPRIEDADES
         protected RepositorioPadrao<T> _repositorio;
-        protected IList<Importacao> _listaMetaDados;
         protected UtilitarioDeImportacao _utilitarioDeImportacao;
         #endregion
 
@@ -21,9 +20,6 @@ namespace BancoLegal.Servico
         public ServicoPadrao()
         {
             _utilitarioDeImportacao = new UtilitarioDeImportacao();
-            _listaMetaDados = _utilitarioDeImportacao.RetorneMetaDados<T>();
-
-            PreencheMetaDados();
         }
 
         /// <summary>
@@ -54,24 +50,19 @@ namespace BancoLegal.Servico
                 return "Conceito não cadastrado.";
             }
 
-            var stringBuilder = new StringBuilder();
+            var linha = _utilitarioDeImportacao.TransformeObjetoEmLinha(objeto);
 
-            ConvertaObjetoEmArquivo(objeto, stringBuilder);
+            SalveArquivo(linha);
 
-            SalveArquivo(stringBuilder);
-
-            return stringBuilder.ToString();
+            return linha;
         }
         #endregion
 
         #region MÉTODOS PROTECTED
-        protected abstract void ConvertaObjetoEmArquivo(T objeto, StringBuilder stringBuffer);
-
-        protected abstract void PreencheMetaDados();
 
         protected abstract RepositorioPadrao<T> Repositorio();
 
-        protected abstract String NomeArquivo();
+        protected abstract string NomeArquivo();
         #endregion
 
         #region MÉTODOS PRIVADOS
@@ -86,16 +77,16 @@ namespace BancoLegal.Servico
 
         private List<T> RetorneObjetosDeArquivo(List<string> linhas)
         {
-            var objetos = _utilitarioDeImportacao.settaValor<T>(linhas);
+            var objetos = _utilitarioDeImportacao.TransformeLinhaEmObjeto<T>(linhas);
             return objetos;
         }
 
-        private void SalveArquivo(StringBuilder conteudoArquivo)
+        private void SalveArquivo(string linha)
         {
             string caminho = string.Concat(Environment.CurrentDirectory, @"\" + NomeArquivo() + ".txt");
             using (StreamWriter file = new StreamWriter(caminho))
             {
-                file.Write(conteudoArquivo.ToString());
+                file.Write(linha);
                 Console.WriteLine("Arquivo salvo em " + caminho);
             }
         }
