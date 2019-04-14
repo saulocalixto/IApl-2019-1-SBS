@@ -11,5 +11,6 @@ namespace BancoLegal.Model.DataAnnotations
         public int Tamanho { get; set; }
         public int Posicao { get; set; }
         public TiposEnum Tipo { get; set; }
+        public string valor { get; set; }
     }
 }

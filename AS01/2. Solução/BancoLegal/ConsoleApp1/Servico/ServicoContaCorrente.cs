@@ -54,34 +54,5 @@ namespace BancoLegal.Servico
         {
             return _repositorio ?? (_repositorio = new RepositorioContaCorrente());
         }
-
-        protected override List<ContaCorrente> RetorneObjetosDeArquivo(List<string> linhas)
-        {
-            List<ContaCorrente> contasCorrente = new List<ContaCorrente>();
-
-            foreach (var linha in linhas)
-            {
-                ContaCorrente conta = new ContaCorrente();
-                var posicaoInicial = 0;
-                conta.Id = _utilitarioDeImportacao.ConverteDado(_metaDadoId.Tipo, linha.Substring(0, _metaDadoId.Tamanho).Trim());
-                posicaoInicial += _metaDadoId.Tamanho;
-                conta.Titular = _utilitarioDeImportacao.ConverteDado(_metaDadoTitular.Tipo, linha.Substring(posicaoInicial, _metaDadoTitular.Tamanho).Trim());
-                posicaoInicial += (_metaDadoTitular.Tamanho);
-                conta.Agencia = _utilitarioDeImportacao.ConverteDado(_metaDadoAgencia.Tipo, linha.Substring(posicaoInicial, _metaDadoAgencia.Tamanho).Trim());
-                posicaoInicial += _metaDadoAgencia.Tamanho;
-                conta.Numero = _utilitarioDeImportacao.ConverteDado(_metaDadoNumero.Tipo, linha.Substring(posicaoInicial, _metaDadoNumero.Tamanho).Trim());
-                posicaoInicial += _metaDadoNumero.Tamanho;
-                conta.Senha = _utilitarioDeImportacao.ConverteDado(_metaDadoSenha.Tipo, linha.Substring(posicaoInicial, _metaDadoSenha.Tamanho - 1).Trim());
-                posicaoInicial += _metaDadoSenha.Tamanho;
-                conta.Saldo = _utilitarioDeImportacao.ConverteDado(_metaDadoSaldo.Tipo, linha.Substring(posicaoInicial, _metaDadoSaldo.Tamanho - 1).Trim());
-                posicaoInicial += _metaDadoSaldo.Tamanho;
-                conta.Limite = _utilitarioDeImportacao.ConverteDado(_metaDadoLimite.Tipo, linha.Substring(posicaoInicial, _metaDadoLimite.Tamanho - 1).Trim());
-                posicaoInicial += _metaDadoLimite.Tamanho;
-                conta.Ativo = _utilitarioDeImportacao.ConverteDado(_metaDadoStatus.Tipo, linha.Substring(posicaoInicial, _metaDadoStatus.Tamanho - 1).Trim());
-                contasCorrente.Add(conta);
-            }
-
-            return contasCorrente;
-        }
     }
 }

@@ -67,8 +67,6 @@ namespace BancoLegal.Servico
         #region MÉTODOS PROTECTED
         protected abstract void ConvertaObjetoEmArquivo(T objeto, StringBuilder stringBuffer);
 
-        protected abstract List<T> RetorneObjetosDeArquivo(List<string> linhas);
-
         protected abstract void PreencheMetaDados();
 
         protected abstract RepositorioPadrao<T> Repositorio();
@@ -84,6 +82,12 @@ namespace BancoLegal.Servico
             var linhas = utilitarioLeitor.RetorneLinhas();
 
             return linhas;
+        }
+
+        private List<T> RetorneObjetosDeArquivo(List<string> linhas)
+        {
+            var objetos = _utilitarioDeImportacao.settaValor<T>(linhas);
+            return objetos;
         }
 
         private void SalveArquivo(StringBuilder conteudoArquivo)
