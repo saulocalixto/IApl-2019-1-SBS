@@ -65,7 +65,7 @@ namespace BancoLegal.BancoDeDados.Repositorio
         #endregion
 
         #region MÉTODOS PROTECTED
-        protected abstract void MapeieCampos(T conta, MySqlCommand cmd);
+        protected abstract void MapeieCampos(T objeto, MySqlCommand cmd);
         protected abstract T Consulte(DbDataReader reader);
         protected abstract string StringDeSelect();
         protected abstract string StringDeInsert();

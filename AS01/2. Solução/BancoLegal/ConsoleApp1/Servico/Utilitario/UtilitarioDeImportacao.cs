@@ -93,6 +93,8 @@ namespace BancoLegal.Servico.Utilitario
                     return decimal.Parse(dado);
                 case TiposEnum.Numerico:
                     return int.Parse(dado);
+                case TiposEnum.Enumerador:
+                    return int.Parse(dado);
                 default:
                     return dado;
             }
@@ -112,6 +114,8 @@ namespace BancoLegal.Servico.Utilitario
                     return dado.ToString().PadRight(tamanho);
                 case TiposEnum.Numerico:
                     return dado.ToString().PadRight(tamanho);
+                case TiposEnum.Enumerador:
+                    return ((int)dado).ToString();
                 default:
                     return dado;
             }
