@@ -5,13 +5,30 @@ namespace BancoLegal.View
 {
     public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
+        {
+            var servicoLogin = new ServicoLogin();
+
+            Console.WriteLine("Seja muito bem vindo ao banco legal!");
+
+            Console.WriteLine("Informe o caminho com a conta para Login: ");
+
+            var caminhoLogin = Console.ReadLine();
+
+            if(servicoLogin.EfetueLogin(caminhoLogin))
+            {
+                MenuPrincipal();
+            } else
+            {
+                Console.WriteLine("Id da conta ou senha incorretos.");
+            }
+        }
+
+        public static void MenuPrincipal()
         {
             var servicoPessoa = new ServicoPessoa();
             var servicoConta = new ServicoContaCorrente();
             var servicoOperacao = new ServicoOperacaoTransferencia();
-
-            Console.WriteLine("Seja muito bem vindo ao banco legal!");
 
             int escolha = -1;
 
