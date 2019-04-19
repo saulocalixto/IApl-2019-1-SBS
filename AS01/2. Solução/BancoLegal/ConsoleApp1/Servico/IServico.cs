@@ -8,5 +8,6 @@ namespace BancoLegal.Servico
     {
         void ImporteArquivo(string caminhoArquivo);
         string Consulte(int Id);
+        void Atualize(TObjeto objeto);
     }
 }

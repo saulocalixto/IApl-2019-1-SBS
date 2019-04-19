@@ -1,6 +1,7 @@
 ﻿using BancoLegal.Model.OperacaoModel;
 using MySql.Data.MySqlClient;
 using System.Data.Common;
+using System.Text;
 
 namespace BancoLegal.BancoDeDados.Repositorio
 {
@@ -39,6 +40,18 @@ namespace BancoLegal.BancoDeDados.Repositorio
         protected override string StringDeSelect()
         {
             return "SELECT * FROM OPERACAO WHERE id = @id";
+        }
+
+        protected override string StringDeUpdate()
+        {
+            var query = new StringBuilder();
+
+            query.Append("UPDATE OPERACAO ")
+                .AppendLine("SET Nome = @nome,")
+                .AppendLine("DATA = @data")
+                .AppendLine("WHERE ID = @id");
+
+            return query.ToString();
         }
     }
 }

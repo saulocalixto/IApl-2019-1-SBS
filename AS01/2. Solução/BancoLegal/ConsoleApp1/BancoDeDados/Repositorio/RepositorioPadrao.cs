@@ -38,11 +38,21 @@ namespace BancoLegal.BancoDeDados.Repositorio
             return default(T);
         }
 
+        public void Cadastre(T objeto)
+        {
+            ExecuteQuery(objeto, StringDeInsert());
+        }
+
+        public void Atualize(T objeto)
+        {
+            ExecuteQuery(objeto, StringDeUpdate());
+        }
+
         /// <summary>
         /// Cadastre um conceito.
         /// </summary>
         /// <param name="objeto">Objeto a ser cadastrado.</param>
-        public void Cadastre(T objeto)
+        private void ExecuteQuery(T objeto, string query)
         {
             try
             {
@@ -50,7 +60,7 @@ namespace BancoLegal.BancoDeDados.Repositorio
                 {
                     conn.Open();
 
-                    using (var cmd = new MySqlCommand(StringDeInsert(), conn))
+                    using (var cmd = new MySqlCommand(query, conn))
                     {
                         MapeieCampos(objeto, cmd);
                         cmd.ExecuteNonQuery();
@@ -69,6 +79,8 @@ namespace BancoLegal.BancoDeDados.Repositorio
         protected abstract T Consulte(DbDataReader reader);
         protected abstract string StringDeSelect();
         protected abstract string StringDeInsert();
+        protected abstract string StringDeUpdate();
+
         #endregion
     }
 }

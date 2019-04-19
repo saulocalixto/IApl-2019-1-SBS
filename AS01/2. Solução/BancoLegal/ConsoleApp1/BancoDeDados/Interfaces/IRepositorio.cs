@@ -18,5 +18,11 @@ namespace BancoLegal.BancoDeDados.Interfaces
         /// </summary>
         /// <param name="objeto">Objeto a ser cadastrado.</param>
         void Cadastre(T objeto);
+
+        /// <summary>
+        /// Atualiza um conceito.
+        /// </summary>
+        /// <param name="objeto">Objeto a ser atualizado.</param>
+        void Atualize(T objeto);
     }
 }

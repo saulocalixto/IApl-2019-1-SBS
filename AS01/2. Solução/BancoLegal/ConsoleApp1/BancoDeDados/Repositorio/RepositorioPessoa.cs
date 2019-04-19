@@ -3,6 +3,7 @@ using BancoLegal.Model.PessoaModel;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data.Common;
+using System.Text;
 
 namespace BancoLegal.BancoDeDados.Repositorio
 {
@@ -39,6 +40,20 @@ namespace BancoLegal.BancoDeDados.Repositorio
         protected override string StringDeInsert()
         {
             return "Insert into PESSOA (ID, NOME, CPF, DATANASCIMENTO, ENDERECO) Values (@id, @nome, @cpf, @data, @endereco);";
+        }
+
+        protected override string StringDeUpdate()
+        {
+            var query = new StringBuilder();
+
+            query.Append("UPDATE PESSOA ")
+                .AppendLine("SET Nome = @nome,")
+                .AppendLine("CPF = @cpf,")
+                .AppendLine("DATANASCIMENTO = @data,")
+                .AppendLine("ENDERECO = @endereco")
+                .AppendLine("WHERE ID = @id");
+
+            return query.ToString();
         }
     }
 }

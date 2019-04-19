@@ -36,22 +36,37 @@ namespace BancoLegal.Servico.Utilitario
             
             foreach (var linha in linhas)
             {
-                var posicaoInicial = 0;
-                foreach (var propriedade in objeto.GetType().GetProperties().OrderBy(x => ((Importacao)x.GetCustomAttributes(true).FirstOrDefault()).Posicao))
-                {
-                    var metaDado = ((Importacao)propriedade.GetCustomAttributes(true).FirstOrDefault());
-                    objeto
-                    .GetType()
-                    .GetProperties()
-                    .FirstOrDefault(x => x.Equals(propriedade))
-                    .SetValue(objeto, ConverteDado(metaDado.Tipo, linha.Substring(posicaoInicial, metaDado.Tamanho).Trim()));
-                    posicaoInicial += metaDado.Tamanho;
-                }
-
-                objetos.Add(objeto);
+                objetos.Add(TransformeLinhaEmObjeto<TObjeto>(linha));
             }
 
             return objetos;
+        }
+
+        /// <summary>
+        /// Setta de forma dinâmica os valores em cada propriedade do objeto a depender do arquivo passado.
+        /// </summary>
+        /// <typeparam name="TObjeto">Tipo do objeto para ser preenchido.</typeparam>
+        /// <param name="objeto">Objeto a ser preenchido.</param>
+        /// <param name="linhas">Linhas do arquivo de importação.</param>
+        /// <returns></returns>
+        public TObjeto TransformeLinhaEmObjeto<TObjeto>(string linha)
+        {
+            List<TObjeto> objetos = new List<TObjeto>();
+            TObjeto objeto = Activator.CreateInstance<TObjeto>();
+
+            var posicaoInicial = 0;
+            foreach (var propriedade in objeto.GetType().GetProperties().OrderBy(x => ((Importacao)x.GetCustomAttributes(true).FirstOrDefault()).Posicao))
+            {
+                var metaDado = ((Importacao)propriedade.GetCustomAttributes(true).FirstOrDefault());
+                objeto
+                .GetType()
+                .GetProperties()
+                .FirstOrDefault(x => x.Equals(propriedade))
+                .SetValue(objeto, ConverteDado(metaDado.Tipo, linha.Substring(posicaoInicial, metaDado.Tamanho).Trim()));
+                posicaoInicial += metaDado.Tamanho;
+            }
+
+            return objeto;
         }
 
         /// <summary>

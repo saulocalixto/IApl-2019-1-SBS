@@ -4,6 +4,6 @@
     {
         Saque = 0,
         Transferencia = 1,
-        Deposito,
+        Deposito = 2,
     }
 }

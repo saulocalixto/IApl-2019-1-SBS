@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Data.Common;
+using System.Text;
 
 namespace BancoLegal.BancoDeDados.Repositorio
 {
@@ -45,6 +46,18 @@ namespace BancoLegal.BancoDeDados.Repositorio
         {
             return "Insert into CONTA (ID, NUMERO, AGENCIA, TITULAR, SENHA," +
                 " SALDO, LIMITE, STATUS, TIPO) Values (@id, @numero, @agencia, @titular, @senha, @saldo, @limite, @status, 1);";
+        }
+
+        protected override string StringDeUpdate()
+        {
+            var query = new StringBuilder();
+
+            query.Append("UPDATE CONTA ")
+                .AppendLine("SET SALDO = @saldo,")
+                .AppendLine("LIMITE = @limite")
+                .AppendLine("WHERE ID = @id");
+
+            return query.ToString();
         }
     }
 }

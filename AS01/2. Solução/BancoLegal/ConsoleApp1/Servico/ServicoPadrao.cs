@@ -14,25 +14,36 @@ namespace BancoLegal.Servico
         #region PROPRIEDADES
         protected RepositorioPadrao<T> _repositorio;
         protected UtilitarioDeImportacao _utilitarioDeImportacao;
+        protected UtilitarioJson<T> _utilitarioJson;
         #endregion
 
         #region MÉTODOS PÚBLICOS
         public ServicoPadrao()
         {
             _utilitarioDeImportacao = new UtilitarioDeImportacao();
+            _utilitarioJson = new UtilitarioJson<T>();
         }
 
         /// <summary>
         /// Importa um arquivo de texto e salva-o no banco de dados.
         /// </summary>
         /// <param name="caminhoArquivo">Caminho em que se encontra o arquivo.</param>
-        public void ImporteArquivo(string caminhoArquivo)
+        public virtual void ImporteArquivo(string caminhoArquivo)
         {
             var linhas = RetorneLinhasDeArquivo(caminhoArquivo);
 
-            foreach (var objeto in RetorneObjetosDeArquivo(linhas))
+            var objetos = RetorneObjetos(caminhoArquivo, linhas);
+
+            foreach (var objeto in objetos)
             {
-                Repositorio().Cadastre(objeto);
+                if(Consulte(objeto.Id).Equals("Conceito não cadastrado."))
+                {
+                    Repositorio().Cadastre(objeto);
+                }
+                else
+                {
+                    Console.Error.WriteLine("Objeto importado de id " + objeto.Id + " já cadastrado.");
+                }
             }
         }
 
@@ -56,17 +67,34 @@ namespace BancoLegal.Servico
 
             return linha;
         }
+
+        /// <summary>
+        /// Atualiza um objeto.
+        /// </summary>
+        /// <param name="objeto">Objeto a ser atualizado.</param>
+        public void Atualize(T objeto)
+        {
+            if (!Consulte(objeto.Id).Equals("Conceito não cadastrado."))
+            {
+                Repositorio().Atualize(objeto);
+            }
+            else
+            {
+                Console.Error.WriteLine("Objeto importado de id " + objeto.Id + " não foi encontrado.");
+            }
+        }
         #endregion
 
         #region MÉTODOS PROTECTED
 
-        protected abstract RepositorioPadrao<T> Repositorio();
+        protected List<T> RetorneObjetos(string caminhoArquivo, List<string> linhas)
+        {
+            return caminhoArquivo.EndsWith("txt")
+                ? RetorneObjetosDeArquivo(linhas)
+                : _utilitarioJson.JsonParaObjeto(linhas);
+        }
 
-        protected abstract string NomeArquivo();
-        #endregion
-
-        #region MÉTODOS PRIVADOS
-        private List<string> RetorneLinhasDeArquivo(string caminho)
+        protected List<string> RetorneLinhasDeArquivo(string caminho)
         {
             var utilitarioLeitor = new UtilitarioLeitorDeArquivo(caminho);
 
@@ -75,6 +103,12 @@ namespace BancoLegal.Servico
             return linhas;
         }
 
+        protected abstract RepositorioPadrao<T> Repositorio();
+
+        protected abstract string NomeArquivo();
+        #endregion
+
+        #region MÉTODOS PRIVADOS
         private List<T> RetorneObjetosDeArquivo(List<string> linhas)
         {
             var objetos = _utilitarioDeImportacao.TransformeLinhaEmObjeto<T>(linhas);
