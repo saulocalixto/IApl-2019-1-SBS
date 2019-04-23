@@ -80,7 +80,6 @@ namespace BancoLegal.BancoDeDados.Repositorio
         protected abstract string StringDeSelect();
         protected abstract string StringDeInsert();
         protected abstract string StringDeUpdate();
-        protected abstract string StringSelectTodos();
 
         #endregion
     }

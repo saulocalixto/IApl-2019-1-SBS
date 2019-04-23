@@ -59,10 +59,5 @@ namespace BancoLegal.BancoDeDados.Repositorio
 
             return query.ToString();
         }
-
-        protected override string StringSelectTodos()
-        {
-            return "SELECT * FROM CONTA;";
-        }
     }
 }
