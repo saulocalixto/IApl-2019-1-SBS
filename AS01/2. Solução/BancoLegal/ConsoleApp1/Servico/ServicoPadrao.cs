@@ -12,12 +12,15 @@ namespace BancoLegal.Servico
     public abstract class ServicoPadrao<T> : IServico<T> where T : ObjetoPadrao
     {
         #region PROPRIEDADES
+
         protected RepositorioPadrao<T> _repositorio;
         protected UtilitarioDeImportacao _utilitarioDeImportacao;
         protected UtilitarioJson<T> _utilitarioJson;
+
         #endregion
 
         #region MÉTODOS PÚBLICOS
+
         public ServicoPadrao()
         {
             _utilitarioDeImportacao = new UtilitarioDeImportacao();
@@ -83,6 +86,7 @@ namespace BancoLegal.Servico
                 Console.Error.WriteLine("Objeto importado de id " + objeto.Id + " não foi encontrado.");
             }
         }
+
         #endregion
 
         #region MÉTODOS PROTECTED
@@ -109,6 +113,7 @@ namespace BancoLegal.Servico
         #endregion
 
         #region MÉTODOS PRIVADOS
+
         private List<T> RetorneObjetosDeArquivo(List<string> linhas)
         {
             var objetos = _utilitarioDeImportacao.TransformeLinhaEmObjeto<T>(linhas);
@@ -124,6 +129,7 @@ namespace BancoLegal.Servico
                 Console.WriteLine("Arquivo salvo em " + caminho);
             }
         }
+
         #endregion
     }
 }

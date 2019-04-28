@@ -5,6 +5,7 @@ using BancoLegal.Servico.Utilitario;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace BancoLegal.Servico
@@ -68,6 +69,30 @@ namespace BancoLegal.Servico
             SalveArquivo(linhaJson, EnumTipoDeArquivo.JSON);
 
             return linhaTxt;
+        }
+
+        public string Consulte()
+        {
+            var lista = Repositorio().ConsulteTodos();
+
+            if (!lista.Any())
+            {
+                return "Não há nada cadastrado.";
+            }
+
+            var linhaTxt = new StringBuilder();
+            var linhaJson = new StringBuilder();
+
+            foreach (var objeto in lista)
+            {
+                linhaTxt.AppendLine(_utilitarioDeImportacao.TransformeObjetoEmLinha(objeto));
+                linhaJson.AppendLine(_utilitarioJson.ObjetoParaJson(objeto));
+            }
+
+            SalveArquivo(linhaTxt.ToString(), EnumTipoDeArquivo.TXT);
+            SalveArquivo(linhaJson.ToString(), EnumTipoDeArquivo.JSON);
+
+            return linhaTxt.ToString();
         }
 
         /// <summary>

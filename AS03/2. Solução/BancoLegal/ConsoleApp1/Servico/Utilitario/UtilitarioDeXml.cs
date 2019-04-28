@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -27,6 +26,23 @@ namespace BancoLegal.Servico.Utilitario
                     return xml.ToString();
                 }
             }
+        }
+
+        public List<T> XmlParaObjetos(List<string> linhas)
+        {
+            List<T> lista = new List<T>();
+            foreach (var linha in linhas)
+            {
+                using (var xml = new StringReader(linha))
+                {
+                    using (XmlTextReader reader = new XmlTextReader(xml))
+                    {
+                        lista.Add(((T)xmlSerializer.Deserialize(reader)));
+                    }
+                }
+            }
+
+            return lista;
         }
     }
 }

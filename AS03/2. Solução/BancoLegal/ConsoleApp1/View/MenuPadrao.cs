@@ -52,8 +52,20 @@ namespace BancoLegal.View
                     Console.WriteLine(ServicoOperacao().Consulte(_id));
                     Console.ReadLine();
                     break;
-                }
+                case 7:
+                    Console.WriteLine(ServicoPessoa().Consulte());
+                    Console.ReadLine();
+                    break;
+                case 8:
+                    Console.WriteLine(ServicoConta().Consulte());
+                    Console.ReadLine();
+                    break;
+                case 9:
+                    Console.WriteLine(ServicoOperacao());
+                    Console.ReadLine();
+                    break;
             }
+        }
 
         public void Menu()
         {
@@ -68,6 +80,9 @@ namespace BancoLegal.View
                 Console.WriteLine("4 - Consultar pessoa");
                 Console.WriteLine("5 - Consultar conta");
                 Console.WriteLine("6 - Consultar operação");
+                Console.WriteLine("7 - Consultar todas pessoas");
+                Console.WriteLine("8 - Consultar todas contas");
+                Console.WriteLine("9 - Consultar todas operações");
                 Console.WriteLine("0 - Sair");
 
                 _escolha = Int32.Parse(Console.ReadLine());

@@ -1,7 +1,10 @@
 ﻿using BancoLegal.BancoDeDados.Interfaces;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
+using System.Text;
 
 namespace BancoLegal.BancoDeDados.Repositorio
 {
@@ -26,7 +29,7 @@ namespace BancoLegal.BancoDeDados.Repositorio
                         cmd.Parameters.AddWithValue("@id", id);
                         using (var reader = cmd.ExecuteReader())
                         {
-                            return Consulte(reader);
+                            return Consulte(reader).FirstOrDefault();
                         }
                     }
                 }
@@ -36,6 +39,35 @@ namespace BancoLegal.BancoDeDados.Repositorio
                 Console.WriteLine(e.ToString());
             }
             return default(T);
+        }
+
+        /// <summary>
+        /// Consulte todos os conceitos.
+        /// </summary>
+        /// <returns>Retorna Lista de objetos.</returns>
+        public List<T> ConsulteTodos()
+        {
+            try
+            {
+                using (var conn = new MySqlConnection(stringConexao))
+                {
+                    conn.Open();
+
+                    using (var cmd = new MySqlCommand(StringDeSelectTodos(), conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            return Consulte(reader);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return default(List<T>);
         }
 
         public void Cadastre(T objeto)
@@ -76,10 +108,44 @@ namespace BancoLegal.BancoDeDados.Repositorio
 
         #region MÉTODOS PROTECTED
         protected abstract void MapeieCampos(T objeto, MySqlCommand cmd);
-        protected abstract T Consulte(DbDataReader reader);
-        protected abstract string StringDeSelect();
+        protected abstract List<T> Consulte(DbDataReader reader);
         protected abstract string StringDeInsert();
         protected abstract string StringDeUpdate();
+        protected abstract string NomeTabela();
+
+        #endregion
+
+        #region MÉTODOS PRIVATES
+
+        private string StringDeSelectTodos()
+        {
+            var stringBuilder = new StringBuilder();
+
+            MonteQuerySelect(stringBuilder);
+
+            return stringBuilder.ToString();
+        }
+
+        private string StringDeSelect()
+        {
+            var stringBuilder = new StringBuilder();
+            MonteQuerySelect(stringBuilder);
+
+            FiltrePorId(stringBuilder);
+
+            return stringBuilder.ToString();
+        }
+
+        private void MonteQuerySelect(StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("SELECT * FROM ")
+                            .Append(NomeTabela());
+        }
+
+        private static void FiltrePorId(StringBuilder stringBuilder)
+        {
+            stringBuilder.Append(" WHERE id = @id");
+        }
 
         #endregion
     }

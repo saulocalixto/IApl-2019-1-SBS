@@ -5,6 +5,7 @@ using BancoLegal.Servico.Utilitario;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace BancoLegal.Servico
@@ -15,15 +16,16 @@ namespace BancoLegal.Servico
         protected RepositorioPadrao<T> _repositorio;
         protected UtilitarioDeImportacao _utilitarioDeImportacao;
         protected UtilitarioJson<T> _utilitarioJson;
-        protected UtilitarioDeXml<T> _utilitarioDeXml;
+        protected UtilitarioDeXml<T> _utilitarioXml;
         #endregion
 
         #region MÉTODOS PÚBLICOS
-        public ServicoPadrao()
+
+        protected ServicoPadrao()
         {
             _utilitarioDeImportacao = new UtilitarioDeImportacao();
             _utilitarioJson = new UtilitarioJson<T>();
-            _utilitarioDeXml = new UtilitarioDeXml<T>();
+            _utilitarioXml = new UtilitarioDeXml<T>();
         }
 
         /// <summary>
@@ -65,13 +67,40 @@ namespace BancoLegal.Servico
 
             var linhaTxt = _utilitarioDeImportacao.TransformeObjetoEmLinha(objeto);
             var linhaJson = _utilitarioJson.ObjetoParaJson(objeto);
-            var linhaXml = _utilitarioDeXml.ObjetoParaString(objeto);
+            var linhaXml = _utilitarioXml.ObjetoParaString(objeto);
 
             SalveArquivo(linhaTxt, EnumTipoDeArquivo.TXT);
             SalveArquivo(linhaJson, EnumTipoDeArquivo.JSON);
             SalveArquivo(linhaXml, EnumTipoDeArquivo.XML);
 
             return linhaTxt;
+        }
+
+        public string Consulte()
+        {
+            var lista = Repositorio().ConsulteTodos();
+
+            if (!lista.Any())
+            {
+                return "Não há nada cadastrado.";
+            }
+
+            var linhaTxt = new StringBuilder();
+            var linhaJson = new StringBuilder();
+            var linhaXml = new StringBuilder();
+
+            foreach (var objeto in lista)
+            {
+                linhaTxt.AppendLine(_utilitarioDeImportacao.TransformeObjetoEmLinha(objeto));
+                linhaJson.AppendLine(_utilitarioJson.ObjetoParaJson(objeto));
+                linhaXml.AppendLine(_utilitarioXml.ObjetoParaString(objeto));
+            }
+
+            SalveArquivo(linhaTxt.ToString(), EnumTipoDeArquivo.TXT);
+            SalveArquivo(linhaJson.ToString(), EnumTipoDeArquivo.JSON);
+            SalveArquivo(linhaXml.ToString(), EnumTipoDeArquivo.XML);
+
+            return linhaTxt.ToString();
         }
 
         /// <summary>
@@ -95,9 +124,21 @@ namespace BancoLegal.Servico
 
         protected List<T> RetorneObjetos(string caminhoArquivo, List<string> linhas)
         {
-            return caminhoArquivo.EndsWith("txt")
-                ? RetorneObjetosDeArquivo(linhas)
-                : _utilitarioJson.JsonParaObjeto(linhas);
+            var lista = new List<T>();
+
+            if (caminhoArquivo.EndsWith("txt"))
+            {
+                lista = RetorneObjetosDeArquivo(linhas);
+            } else if (caminhoArquivo.EndsWith("json"))
+            {
+                lista = _utilitarioJson.JsonParaObjeto(linhas);
+            }
+            else
+            {
+                lista = _utilitarioXml.XmlParaObjetos(linhas);
+            }
+
+            return lista;
         }
 
         protected List<string> RetorneLinhasDeArquivo(string caminho)
