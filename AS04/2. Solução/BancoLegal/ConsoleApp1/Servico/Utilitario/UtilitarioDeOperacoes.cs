@@ -1,4 +1,5 @@
-﻿using BancoLegal.Model.ContaModel;
+﻿using BancoLegal.Localization;
+using BancoLegal.Model.ContaModel;
 using BancoLegal.Model.OperacaoModel;
 using System;
 
@@ -22,7 +23,7 @@ namespace BancoLegal.Servico.Utilitario
 
         public bool ApliqueOperacao()
         {
-            switch(_operacao.Tipo)
+            switch (_operacao.Tipo)
             {
                 case EnumTipoOperacao.Saque:
                     return OperacaoDeSaque();
@@ -45,7 +46,7 @@ namespace BancoLegal.Servico.Utilitario
             }
             else
             {
-                Console.Error.WriteLine("O valor para saque é maior do que o disponível em conta.");
+                Console.Error.WriteLine(Strings.NotEnoughFunds);
                 return false;
             }
         }
@@ -69,7 +70,7 @@ namespace BancoLegal.Servico.Utilitario
             }
             else
             {
-                Console.Error.WriteLine("O valor para saque é maior do que o disponível em conta.");
+                Console.Error.WriteLine(Strings.NotEnoughFunds);
                 return false;
             }
         }

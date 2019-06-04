@@ -1,4 +1,5 @@
-﻿using BancoLegal.Servico;
+﻿using BancoLegal.Localization;
+using BancoLegal.Servico;
 using System;
 
 namespace BancoLegal.View
@@ -13,16 +14,17 @@ namespace BancoLegal.View
 
         public void AcoesMenu(int acao)
         {
-            switch(_escolha)
+            switch (_escolha)
             {
                 case 1:
-                    if(EfetueLogin())
+                    if (EfetueLogin())
                     {
                         _menuPadrao = new MenuPadrao();
                         _menuPadrao.Menu();
-                    } else
+                    }
+                    else
                     {
-                        Console.WriteLine("Falha ao efetuar o login, verifique o arquivo importado.");
+                        Console.WriteLine(Strings.LoginFailed);
                     }
 
                     break;
@@ -31,14 +33,14 @@ namespace BancoLegal.View
 
         public void Menu()
         {
-            Console.WriteLine("Seja muito bem vindo ao banco legal!");
+            Console.WriteLine(Strings.Welcome);
+            Console.WriteLine(Strings.ChooseOption);
 
-            Console.WriteLine("O que deseja fazer?");
             _escolha = -1;
-            while(_escolha != 0)
+            while (_escolha != 0)
             {
-                Console.WriteLine("1 - Login");
-                Console.WriteLine("0 - Sair");
+                Console.WriteLine("1 - " + Strings.OptionLogin);
+                Console.WriteLine("0 - " + Strings.OptionExit);
 
                 _escolha = Int32.Parse(Console.ReadLine());
 
@@ -54,7 +56,7 @@ namespace BancoLegal.View
 
         private bool EfetueLogin()
         {
-            Console.WriteLine("Informe o caminho com a conta para Login: ");
+            Console.WriteLine(Strings.ProvideLoginFilePath);
             _caminho = Console.ReadLine();
             return ServicoLogin().EfetueLogin(_caminho);
         }

@@ -1,13 +1,11 @@
 ﻿using BancoLegal.BancoDeDados.Repositorio;
+using BancoLegal.Localization;
 using BancoLegal.Model;
-using BancoLegal.Model.DataAnnotations;
 using BancoLegal.Servico.Utilitario;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace BancoLegal.Servico
 {
@@ -41,13 +39,13 @@ namespace BancoLegal.Servico
 
             foreach (var objeto in objetos)
             {
-                if(Consulte(objeto.Id).Equals("Conceito não cadastrado."))
+                if (Consulte(objeto.Id).Equals(Strings.ConceptNotFound))
                 {
                     Repositorio().Cadastre(objeto);
                 }
                 else
                 {
-                    Console.Error.WriteLine("Objeto importado de id " + objeto.Id + " já cadastrado.");
+                    Console.Error.WriteLine(string.Format(Strings.ObjectAlreadyRegistered, objeto.Id));
                 }
             }
         }
@@ -63,7 +61,7 @@ namespace BancoLegal.Servico
 
             if (objeto == null || Id != objeto.Id)
             {
-                throw new Exception("Não há registros com o id informado.");
+                throw new Exception(Strings.ObjectNotFound);
             }
 
             return objeto;
@@ -75,7 +73,7 @@ namespace BancoLegal.Servico
 
             if (!lista.Any())
             {
-                throw new Exception("Nenhum registro cadastrado no banco de dados.");
+                throw new Exception(Strings.ObjectsNotFound);
             }
 
             return lista;
@@ -87,13 +85,13 @@ namespace BancoLegal.Servico
         /// <param name="objeto">Objeto a ser atualizado.</param>
         public void Atualize(T objeto)
         {
-            if (!Consulte(objeto.Id).Equals("Conceito não cadastrado."))
+            if (!Consulte(objeto.Id).Equals(Strings.ConceptNotFound))
             {
                 Repositorio().Atualize(objeto);
             }
             else
             {
-                Console.Error.WriteLine("Objeto importado de id " + objeto.Id + " não foi encontrado.");
+                Console.Error.WriteLine(string.Format(Strings.ObjectAlreadyRegistered, objeto.Id));
             }
         }
         #endregion
@@ -107,7 +105,8 @@ namespace BancoLegal.Servico
             if (caminhoArquivo.EndsWith("txt"))
             {
                 lista = RetorneObjetosDeArquivo(linhas);
-            } else if (caminhoArquivo.EndsWith("json"))
+            }
+            else if (caminhoArquivo.EndsWith("json"))
             {
                 lista = _utilitarioJson.JsonParaObjeto(linhas);
             }
@@ -144,7 +143,7 @@ namespace BancoLegal.Servico
         {
             var extensaoArquivo = string.Empty;
 
-            switch(tipoDeArquivo)
+            switch (tipoDeArquivo)
             {
                 case EnumTipoDeArquivo.TXT:
                     extensaoArquivo = ".txt";
@@ -161,7 +160,7 @@ namespace BancoLegal.Servico
             using (StreamWriter file = new StreamWriter(caminho))
             {
                 file.Write(linha);
-                Console.WriteLine("Arquivo salvo em " + caminho);
+                Console.WriteLine(string.Format(Strings.FileSavedAt, caminho));
             }
         }
         #endregion

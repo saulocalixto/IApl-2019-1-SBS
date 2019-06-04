@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BancoLegal.Localization;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -24,14 +25,14 @@ namespace BancoLegal.Servico.Utilitario
             }
             catch (FileNotFoundException)
             {
-                Console.Error.WriteLine("Arquivo não pôde ser aberto, pois não existe.");
+                Console.Error.WriteLine(Strings.FileNotFound);
             }
-            
+
         }
 
         public List<string> RetorneLinhas()
         {
-            if(_leitor != null)
+            if (_leitor != null)
             {
                 var linha = _leitor.ReadLine();
 
@@ -43,7 +44,7 @@ namespace BancoLegal.Servico.Utilitario
 
                 FecharConexao();
             }
-           
+
             return _linhas;
         }
 

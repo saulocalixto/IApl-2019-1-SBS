@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BancoLegal.Localization;
+using System;
 
 namespace BancoLegal.Servico.Fabrica
 {
@@ -14,7 +13,7 @@ namespace BancoLegal.Servico.Fabrica
 
             if (tipo.IsAbstract || tipo.IsInterface)
             {
-                throw new ArgumentException("Não é possível instanciar uma classe abstrata.");
+                throw new ArgumentException(Strings.CantInstantiateAbstractClass);
             }
 
             return Activator.CreateInstance<T>(); ;
