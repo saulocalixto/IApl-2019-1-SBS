@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BancoLegal", "ConsoleApp1\BancoLegal.csproj", "{F1B4C36A-CBAC-419E-8EFF-63CC1F610969}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiBancoLegal", "ApiBancoLegal\ApiBancoLegal.csproj", "{CAC58939-5CFF-40BA-9185-64F55E5CEB41}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F1B4C36A-CBAC-419E-8EFF-63CC1F610969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B4C36A-CBAC-419E-8EFF-63CC1F610969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B4C36A-CBAC-419E-8EFF-63CC1F610969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B4C36A-CBAC-419E-8EFF-63CC1F610969}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAC58939-5CFF-40BA-9185-64F55E5CEB41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC58939-5CFF-40BA-9185-64F55E5CEB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC58939-5CFF-40BA-9185-64F55E5CEB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC58939-5CFF-40BA-9185-64F55E5CEB41}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B016780-E424-4808-81C9-09003EA1F584}
+	EndGlobalSection
+EndGlobal
