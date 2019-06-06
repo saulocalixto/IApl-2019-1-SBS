@@ -3,7 +3,7 @@ Trabalho para a disciplina de Integração de Aplicações do Bacharelado em Eng
 
 ## API
 
-O sistema desenvolvivo possui uma API REST que pode ser acessada em:
+O sistema desenvolvido possui uma API REST que pode ser acessada em:
 
 ```
 http://bancolegal.azurewebsites.net/api/
