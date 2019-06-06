@@ -9,6 +9,34 @@ O sistema desenvolvivo possui uma API REST que pode ser acessada em:
 http://bancolegal.azurewebsites.net/api/
 ```
 
+### Conta (/conta)
+
+```json
+{
+    "titular": 1,
+    "agencia": 854,
+    "numero": 12345678,
+    "senha": "1234admin",
+    "saldo": 100000,
+    "limite": 755555,
+    "ativo": true,
+    "id": 1
+}
+```
+
+### Operação (/operacao)
+
+```json
+{
+    "tipo": 1,
+    "valor": 500,
+    "dataDaOperacao": "2019-01-01T00:00:00",
+    "contaOrigem": 1,
+    "contaDestino": 2,
+    "id": 1
+}
+```
+
 ### Pessoa (/pessoa)
 
 ```json
@@ -20,7 +48,3 @@ http://bancolegal.azurewebsites.net/api/
     "id": 1
 }
 ```
-
-### Operação (/operacao)
-
-### Conta (/conta)
