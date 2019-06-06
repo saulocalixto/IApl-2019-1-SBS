@@ -9,7 +9,18 @@ O sistema desenvolvivo possui uma API REST que pode ser acessada em:
 http://bancolegal.azurewebsites.net/api/
 ```
 
-### Endpoints
-* Pessoa (/pessoa)
-* Operação (/operacao)
-* Conta (/conta)
+### Pessoa (/pessoa)
+
+```json
+{
+    "nome": "Nome Completo",
+    "cpf": "12345678900",
+    "dataNascimento": "1990-09-18T00:00:00",
+    "endereco": "Rua X n 123",
+    "id": 1
+}
+```
+
+### Operação (/operacao)
+
+### Conta (/conta)
