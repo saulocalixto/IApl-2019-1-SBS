@@ -1,4 +1,6 @@
-﻿namespace BancoLegal.BancoDeDados
+﻿using BancoLegal.Resources;
+
+namespace BancoLegal.BancoDeDados
 {
     public class ConexaoBanco
     {
@@ -6,7 +8,7 @@
 
         public ConexaoBanco()
         {
-            stringConexao = "Server=localhost;User ID=root;Password=123456;Database=bancolegal";
+            stringConexao = Database.ConnectionString;
         }
 
         public ConexaoBanco(string stringConexao)

@@ -15,7 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Localization\strings.Designer.cs">
+    <Compile Update="Resources\Database.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Database.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Strings.resx</DependentUpon>
@@ -23,7 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Localization\Strings.resx">
+    <EmbeddedResource Update="Resources\Database.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Database.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>

@@ -1,6 +1,6 @@
-﻿using BancoLegal.Localization;
-using BancoLegal.Model.ContaModel;
+﻿using BancoLegal.Model.ContaModel;
 using BancoLegal.Model.OperacaoModel;
+using BancoLegal.Resources;
 using System;
 
 namespace BancoLegal.Servico.Utilitario

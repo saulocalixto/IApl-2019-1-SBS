@@ -1,4 +1,4 @@
-﻿using BancoLegal.Localization;
+﻿using BancoLegal.Resources;
 using BancoLegal.Servico;
 using System;
 

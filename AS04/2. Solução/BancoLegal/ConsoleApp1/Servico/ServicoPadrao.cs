@@ -1,6 +1,6 @@
 ﻿using BancoLegal.BancoDeDados.Repositorio;
-using BancoLegal.Localization;
 using BancoLegal.Model;
+using BancoLegal.Resources;
 using BancoLegal.Servico.Utilitario;
 using System;
 using System.Collections.Generic;
