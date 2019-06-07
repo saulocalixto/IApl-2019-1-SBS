@@ -1,6 +1,7 @@
 ﻿using BancoLegal.BancoDeDados.Repositorio;
 using BancoLegal.Model.LoginModel;
 using BancoLegal.Servico.Utilitario;
+using System;
 
 namespace BancoLegal.Servico
 {
@@ -37,5 +38,15 @@ namespace BancoLegal.Servico
             return _repositorioContaCorrente ?? (_repositorioContaCorrente = new RepositorioContaCorrente());
         }
 
+        private string GerarToken(int idPessoa)
+        {
+            return new Guid().ToString();
+        }
+
+        public bool ValidarToken(string token, int idPessoa)
+        {
+            var t = new Guid();
+            return Guid.TryParse(token, out t);
+        }
     }
 }
