@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BancoLegal", "ConsoleApp1\BancoLegal.csproj", "{F1B4C36A-CBAC-419E-8EFF-63CC1F610969}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiBancoLegal", "ApiBancoLegal\ApiBancoLegal.csproj", "{CAC58939-5CFF-40BA-9185-64F55E5CEB41}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicoBancoLegal", "ServicoBancoLegal\ServicoBancoLegal.csproj", "{2E8E3609-3EB9-4191-9A92-438AD1F37114}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F1B4C36A-CBAC-419E-8EFF-63CC1F610969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1B4C36A-CBAC-419E-8EFF-63CC1F610969}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1B4C36A-CBAC-419E-8EFF-63CC1F610969}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1B4C36A-CBAC-419E-8EFF-63CC1F610969}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CAC58939-5CFF-40BA-9185-64F55E5CEB41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CAC58939-5CFF-40BA-9185-64F55E5CEB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAC58939-5CFF-40BA-9185-64F55E5CEB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAC58939-5CFF-40BA-9185-64F55E5CEB41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E8E3609-3EB9-4191-9A92-438AD1F37114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E8E3609-3EB9-4191-9A92-438AD1F37114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E8E3609-3EB9-4191-9A92-438AD1F37114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E8E3609-3EB9-4191-9A92-438AD1F37114}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BancoLegal.Model.ContaModel;
-using BancoLegal.Servico;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using ServicoBancoLegal.Model.ContaModel;
+using ServicoBancoLegal.Servico;
 
 namespace ApiBancoLegal.Controllers
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using BancoLegal.Model;
-using BancoLegal.Servico;
 using Microsoft.AspNetCore.Mvc;
+using ServicoBancoLegal.Model;
+using ServicoBancoLegal.Servico;
 
 namespace ApiBancoLegal.Controllers
 {
