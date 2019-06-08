@@ -24,5 +24,18 @@ namespace BancoLegal.BancoDeDados.Interfaces
         /// </summary>
         /// <param name="objeto">Objeto a ser atualizado.</param>
         void Atualize(T objeto);
+
+        /// <summary>
+        /// Deleta um item no banco.
+        /// </summary>
+        /// <param name="id">Id do item a ser deletado.</param>
+        void Delet(int id);
+
+        /// <summary>
+        /// Verifica se item está cadastrado.
+        /// </summary>
+        /// <param name="id">Id do item cadastrado.</param>
+        /// <returns>Retorna se o item existe ou não.</returns>
+        bool ExisteObjeto(int id);
     }
 }

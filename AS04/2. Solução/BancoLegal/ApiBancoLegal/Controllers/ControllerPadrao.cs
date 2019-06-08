@@ -21,20 +21,22 @@ namespace ApiBancoLegal.Controllers
             return Servico().Consulte(id);
         }
 
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost()]
+        public void Cadastre([FromBody] T objeto)
         {
+            Servico().Insert(objeto);
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut()]
+        public void Atualize([FromBody] T objeto)
         {
-            Servico().ImporteArquivo(value);
+            Servico().Atualize(objeto);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            Servico().Delet(id);
         }
 
         public abstract ServicoPadrao<T> Servico();
