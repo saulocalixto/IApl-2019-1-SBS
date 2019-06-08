@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ServicoBancoLegal.BancoDeDados.Repositorio;
+﻿using ServicoBancoLegal.BancoDeDados.Repositorio;
 using ServicoBancoLegal.Model;
 using ServicoBancoLegal.Resources;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ServicoBancoLegal.Servico
 {
@@ -24,6 +24,10 @@ namespace ServicoBancoLegal.Servico
             if (!ObjetoExiste(objeto.Id))
             {
                 Repositorio().Cadastre(objeto);
+            }
+            else
+            {
+                throw new Exception(Strings.ObjectAlreadyRegistered);
             }
         }
 
@@ -72,7 +76,7 @@ namespace ServicoBancoLegal.Servico
             }
             else
             {
-                Console.Error.WriteLine(string.Format(Strings.ObjectAlreadyRegistered, objeto.Id));
+                throw new Exception(string.Format(Strings.ObjectAlreadyRegistered, objeto.Id));
             }
         }
 
@@ -86,11 +90,11 @@ namespace ServicoBancoLegal.Servico
             return Repositorio().ExisteObjeto(Id);
         }
 
-        public void Delet(int id)
+        public void Delete(int id)
         {
             if (ObjetoExiste(id))
             {
-                Repositorio().Delet(id);
+                Repositorio().Delete(id);
             }
             else
             {

@@ -25,7 +25,7 @@
         /// Deleta um item no banco.
         /// </summary>
         /// <param name="id">Id do item a ser deletado.</param>
-        void Delet(int id);
+        void Delete(int id);
 
         /// <summary>
         /// Verifica se item está cadastrado.

@@ -40,6 +40,6 @@ namespace ServicoBancoLegal.Servico
         /// Deletea um objeto.
         /// </summary>
         /// <param name="id">O id do objeto a ser deletado.</param>
-        void Delet(int id);
+        void Delete(int id);
     }
 }

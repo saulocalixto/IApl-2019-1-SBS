@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using ServicoBancoLegal.BancoDeDados.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
-using MySql.Data.MySqlClient;
-using ServicoBancoLegal.BancoDeDados.Interfaces;
 
 namespace ServicoBancoLegal.BancoDeDados.Repositorio
 {
@@ -18,27 +18,19 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         /// <returns>Retorna o objeto relacionado àquele conceito.</returns>
         public T Consulte(int id)
         {
-            try
+            using (var conn = new MySqlConnection(stringConexao))
             {
-                using (var conn = new MySqlConnection(stringConexao))
-                {
-                    conn.Open();
+                conn.Open();
 
-                    using (var cmd = new MySqlCommand(StringDeSelect(), conn))
+                using (var cmd = new MySqlCommand(StringDeSelect(), conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            return Consulte(reader).FirstOrDefault();
-                        }
+                        return Consulte(reader).FirstOrDefault();
                     }
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-            return default(T);
         }
 
         /// <summary>
@@ -47,27 +39,18 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         /// <returns>Retorna Lista de objetos.</returns>
         public List<T> ConsulteTodos()
         {
-            try
+            using (var conn = new MySqlConnection(stringConexao))
             {
-                using (var conn = new MySqlConnection(stringConexao))
-                {
-                    conn.Open();
+                conn.Open();
 
-                    using (var cmd = new MySqlCommand(StringDeSelectTodos(), conn))
+                using (var cmd = new MySqlCommand(StringDeSelectTodos(), conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            return Consulte(reader);
-                        }
+                        return Consulte(reader);
                     }
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            return default(List<T>);
         }
 
         /// <summary>
@@ -83,10 +66,9 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         /// Deleta um item no banco.
         /// </summary>
         /// <param name="id">Id do item a ser deletado.</param>
-        public void Delet(int id)
+        public void Delete(int id)
         {
-            var query = StringDeDelet();
-
+            var query = StringDeDelete();
             ExecuteQuery(string.Format(query, id));
         }
 
@@ -122,7 +104,14 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
 
         public void Atualize(T objeto)
         {
-            ExecuteQuery(objeto, StringDeUpdate());
+            try
+            {
+                ExecuteQuery(objeto, StringDeUpdate());
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         /// <summary>
@@ -131,22 +120,15 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         /// <param name="objeto">Objeto a ser cadastrado.</param>
         private void ExecuteQuery(T objeto, string query)
         {
-            try
+            using (var conn = new MySqlConnection(stringConexao))
             {
-                using (var conn = new MySqlConnection(stringConexao))
-                {
-                    conn.Open();
+                conn.Open();
 
-                    using (var cmd = new MySqlCommand(query, conn))
-                    {
-                        MapeieCampos(objeto, cmd);
-                        cmd.ExecuteNonQuery();
-                    }
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    MapeieCampos(objeto, cmd);
+                    cmd.ExecuteNonQuery();
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
             }
         }
 
@@ -156,21 +138,14 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         /// <param name="query">Query a ser executada.</param>
         private void ExecuteQuery(string query)
         {
-            try
+            using (var conn = new MySqlConnection(stringConexao))
             {
-                using (var conn = new MySqlConnection(stringConexao))
-                {
-                    conn.Open();
+                conn.Open();
 
-                    using (var cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.ExecuteNonQuery();
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
             }
         }
         #endregion
@@ -195,11 +170,11 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
             return stringBuilder.ToString();
         }
 
-        private string StringDeDelet()
+        private string StringDeDelete()
         {
             var stringBuilder = new StringBuilder();
 
-            MonteQueryDelet(stringBuilder);
+            MonteQueryDelete(stringBuilder);
 
             return stringBuilder.ToString();
         }
@@ -236,7 +211,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
                 .Append(NomeTabela());
         }
 
-        private void MonteQueryDelet(StringBuilder stringBuilder)
+        private void MonteQueryDelete(StringBuilder stringBuilder)
         {
             stringBuilder.Append("DELETE FROM ")
                 .Append(NomeTabela())
