@@ -1,6 +1,7 @@
 ﻿using ApiBancoLegal.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using ServicoBancoLegal.Model.LoginModel;
+using ServicoBancoLegal.Resources;
 using ServicoBancoLegal.Servico;
 using System;
 
@@ -20,7 +21,7 @@ namespace ApiBancoLegal.Controllers
             }
             else
             {
-                return new ObjetoErro(new Exception("Senha inválida! Não foi possível realizar o login."));
+                return new ObjetoErro(new Exception(Strings.InvalidPassword));
             }
         }
     }

@@ -49,7 +49,7 @@ namespace ServicoBancoLegal.Servico
             return Guid.NewGuid().ToString();
         }
 
-        public bool ValidarToken(string token, int idPessoa)
+        public bool ValidarToken(string token)
         {
             var t = new Guid();
             return Guid.TryParse(token, out t);

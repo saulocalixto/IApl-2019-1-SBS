@@ -11,6 +11,17 @@ http://bancolegal.azurewebsites.net/api/
 
 ### Login (/login)
 
+Para realizar todas as outras chamadas listadas, é necessário realizar um Login na plataforma. Utilizando o endpoint abaixo, a API retornará um token que deverá ser usado para validar a requisição.
+
+O token obtido deverá ser fornecido no body da requisição com dois parâmetros, 'token' e 'objeto'. Este último parâmetro deverá conter o objeto referente à requisição em chamadas do tipo POST e PUT. Em qualquer outra requisição, fornecer uma string vazia ("") é suficiente.
+
+```json
+{
+    "objeto": "",
+    "token": "91ba471b-82dc-4637-86d7-f5096ac826a7"
+}
+```
+
 * Realizar Login: GET /api/login
 
 ```json

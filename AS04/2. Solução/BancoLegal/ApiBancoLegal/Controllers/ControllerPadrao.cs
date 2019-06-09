@@ -1,6 +1,8 @@
 ﻿using ApiBancoLegal.Exceptions;
+using ApiBancoLegal.RequestObjects;
 using Microsoft.AspNetCore.Mvc;
 using ServicoBancoLegal.Model;
+using ServicoBancoLegal.Resources;
 using ServicoBancoLegal.Servico;
 using System;
 
@@ -11,11 +13,14 @@ namespace ApiBancoLegal.Controllers
     public abstract class ControllerPadrao<T> : ControllerBase where T : ObjetoPadrao
     {
         [HttpGet]
-        public ActionResult<object> Get()
+        public ActionResult<object> Get([FromBody] ObjetoRequisicao<T> requisicao)
         {
             try
             {
-                return Servico().Consulte();
+                if (ValidarToken(requisicao.token))
+                    return Servico().Consulte();
+                else
+                    throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
@@ -24,11 +29,14 @@ namespace ApiBancoLegal.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<object> Get(int id)
+        public ActionResult<object> Get(int id, [FromBody] ObjetoRequisicao<T> requisicao)
         {
             try
             {
-                return Servico().Consulte(id);
+                if (ValidarToken(requisicao.token))
+                    return Servico().Consulte(id);
+                else
+                    throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
@@ -37,11 +45,14 @@ namespace ApiBancoLegal.Controllers
         }
 
         [HttpPost()]
-        public ActionResult<object> Cadastre([FromBody] T objeto)
+        public ActionResult<object> Cadastre([FromBody] ObjetoRequisicao<T> requisicao)
         {
             try
             {
-                return Servico().Insert(objeto);
+                if (ValidarToken(requisicao.token))
+                    return Servico().Insert(requisicao.objeto);
+                else
+                    throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
@@ -50,11 +61,14 @@ namespace ApiBancoLegal.Controllers
         }
 
         [HttpPut()]
-        public ActionResult<object> Atualize([FromBody] T objeto)
+        public ActionResult<object> Atualize([FromBody] ObjetoRequisicao<T> requisicao)
         {
             try
             {
-                return Servico().Atualize(objeto);
+                if (ValidarToken(requisicao.token))
+                    return Servico().Atualize(requisicao.objeto);
+                else
+                    throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
@@ -63,11 +77,14 @@ namespace ApiBancoLegal.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<object> Delete(int id)
+        public ActionResult<object> Delete(int id, [FromBody] ObjetoRequisicao<T> requisicao)
         {
             try
             {
-                return Servico().Delete(id);
+                if (ValidarToken(requisicao.token))
+                    return Servico().Delete(id);
+                else
+                    throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
@@ -80,6 +97,11 @@ namespace ApiBancoLegal.Controllers
         private static ActionResult<object> ObjetoErro(Exception e)
         {
             return new ObjetoErro(e);
+        }
+
+        private static bool ValidarToken(string token)
+        {
+            return new ServicoLogin().ValidarToken(token);
         }
     }
 }
