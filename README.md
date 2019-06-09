@@ -39,8 +39,8 @@ O token obtido deverá ser fornecido no body da requisição com dois parâmetro
 
 * Consultar Todos: GET /api/conta
 * Consultar: GET /api/conta/1
-* Cadastrar: POST /api/conta/1
-* Atualizar: PUT /api/conta/1
+* Cadastrar: POST /api/conta
+* Atualizar: PUT /api/conta
 * Apagar: DELETE /api/conta/1
 
 ### Objeto de Exemplo
@@ -64,8 +64,8 @@ O token obtido deverá ser fornecido no body da requisição com dois parâmetro
 
 * Consultar Todos: GET /api/operacao
 * Consultar: GET /api/operacao/1
-* Cadastrar: POST /api/operacao/1
-* Atualizar: PUT /api/operacao/1
+* Cadastrar: POST /api/operacao
+* Atualizar: PUT /api/operacao
 * Apagar: DELETE /api/operacao/1
 
 ### Objeto de Exemplo
@@ -87,8 +87,8 @@ O token obtido deverá ser fornecido no body da requisição com dois parâmetro
 
 * Consultar Todos: GET /api/pessoa
 * Consultar: GET /api/pessoa/1
-* Cadastrar: POST /api/pessoa/1
-* Atualizar: PUT /api/pessoa/1
+* Cadastrar: POST /api/pessoa
+* Atualizar: PUT /api/pessoa
 * Apagar: DELETE /api/pessoa/1
 
 ### Objeto de Exemplo
