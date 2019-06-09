@@ -9,7 +9,24 @@ O sistema desenvolvido possui uma API REST que pode ser acessada em:
 http://bancolegal.azurewebsites.net/api/
 ```
 
+### Login (/login)
+
+* Realizar Login: GET /api/login
+
+```json
+{
+    "IdConta": 1,
+    "Senha": "123456"
+}
+```
+
 ### Conta (/conta)
+
+* Consultar Todos: GET /api/conta
+* Consultar: GET /api/conta/1
+* Cadastrar: POST /api/conta/1
+* Atualizar: PUT /api/conta/1
+* Apagar: DELETE /api/conta/1
 
 ```json
 {
@@ -26,6 +43,12 @@ http://bancolegal.azurewebsites.net/api/
 
 ### Operação (/operacao)
 
+* Consultar Todos: GET /api/operacao
+* Consultar: GET /api/operacao/1
+* Cadastrar: POST /api/operacao/1
+* Atualizar: PUT /api/operacao/1
+* Apagar: DELETE /api/operacao/1
+
 ```json
 {
     "tipo": 1,
@@ -38,6 +61,12 @@ http://bancolegal.azurewebsites.net/api/
 ```
 
 ### Pessoa (/pessoa)
+
+* Consultar Todos: GET /api/pessoa
+* Consultar: GET /api/pessoa/1
+* Cadastrar: POST /api/pessoa/1
+* Atualizar: PUT /api/pessoa/1
+* Apagar: DELETE /api/pessoa/1
 
 ```json
 {

@@ -1,7 +1,7 @@
-﻿using System;
-using ServicoBancoLegal.BancoDeDados.Repositorio;
+﻿using ServicoBancoLegal.BancoDeDados.Repositorio;
 using ServicoBancoLegal.Model.LoginModel;
 using ServicoBancoLegal.Servico.Utilitario;
+using System;
 
 namespace ServicoBancoLegal.Servico
 {
@@ -33,14 +33,20 @@ namespace ServicoBancoLegal.Servico
             return false;
         }
 
+        public bool EfetueLogin(Login objeto)
+        {
+            var conta = RepositorioContaCorrente().Consulte(objeto.IdConta);
+            return conta.Senha.Equals(objeto.Senha);
+        }
+
         private RepositorioContaCorrente RepositorioContaCorrente()
         {
             return _repositorioContaCorrente ?? (_repositorioContaCorrente = new RepositorioContaCorrente());
         }
 
-        private string GerarToken(int idPessoa)
+        public string GerarToken(int idPessoa)
         {
-            return new Guid().ToString();
+            return Guid.NewGuid().ToString();
         }
 
         public bool ValidarToken(string token, int idPessoa)
