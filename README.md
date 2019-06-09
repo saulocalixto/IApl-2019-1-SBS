@@ -1,15 +1,13 @@
 # IApl-2019-1-SBS
 Trabalho para a disciplina de Integração de Aplicações do Bacharelado em Engenharia de Software do INF-UFG. Consiste na implementação de um serviço bancário fictício.
 
-## API
-
 O sistema desenvolvido possui uma API REST que pode ser acessada em:
 
 ```
 http://bancolegal.azurewebsites.net/api/
 ```
 
-### Login (/login)
+## Login (/login)
 
 Para realizar todas as outras chamadas listadas, é necessário realizar um Login na plataforma. Utilizando o endpoint abaixo, a API retornará um token que deverá ser usado para validar a requisição.
 
@@ -22,7 +20,11 @@ O token obtido deverá ser fornecido no body da requisição com dois parâmetro
 }
 ```
 
+### Endpoints
+
 * Realizar Login: GET /api/login
+
+### Objeto de Exemplo
 
 ```json
 {
@@ -31,13 +33,17 @@ O token obtido deverá ser fornecido no body da requisição com dois parâmetro
 }
 ```
 
-### Conta (/conta)
+## Conta (/conta)
+
+### Endpoints
 
 * Consultar Todos: GET /api/conta
 * Consultar: GET /api/conta/1
 * Cadastrar: POST /api/conta/1
 * Atualizar: PUT /api/conta/1
 * Apagar: DELETE /api/conta/1
+
+### Objeto de Exemplo
 
 ```json
 {
@@ -52,13 +58,17 @@ O token obtido deverá ser fornecido no body da requisição com dois parâmetro
 }
 ```
 
-### Operação (/operacao)
+## Operação (/operacao)
+
+### Endpoints
 
 * Consultar Todos: GET /api/operacao
 * Consultar: GET /api/operacao/1
 * Cadastrar: POST /api/operacao/1
 * Atualizar: PUT /api/operacao/1
 * Apagar: DELETE /api/operacao/1
+
+### Objeto de Exemplo
 
 ```json
 {
@@ -71,13 +81,17 @@ O token obtido deverá ser fornecido no body da requisição com dois parâmetro
 }
 ```
 
-### Pessoa (/pessoa)
+## Pessoa (/pessoa)
+
+### Endpoints
 
 * Consultar Todos: GET /api/pessoa
 * Consultar: GET /api/pessoa/1
 * Cadastrar: POST /api/pessoa/1
 * Atualizar: PUT /api/pessoa/1
 * Apagar: DELETE /api/pessoa/1
+
+### Objeto de Exemplo
 
 ```json
 {
