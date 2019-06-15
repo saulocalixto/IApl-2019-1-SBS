@@ -1,10 +1,10 @@
 ﻿using ApiBancoLegal.Exceptions;
-using ApiBancoLegal.RequestObjects;
 using Microsoft.AspNetCore.Mvc;
 using ServicoBancoLegal.Model;
 using ServicoBancoLegal.Resources;
 using ServicoBancoLegal.Servico;
 using System;
+using System.Linq;
 
 namespace ApiBancoLegal.Controllers
 {
@@ -13,82 +13,95 @@ namespace ApiBancoLegal.Controllers
     public abstract class ControllerPadrao<T> : ControllerBase where T : ObjetoPadrao
     {
         [HttpGet]
-        public ActionResult<object> Get([FromBody] ObjetoRequisicao<T> requisicao)
+        public ActionResult<T> Get()
         {
             try
             {
-                if (ValidarToken(requisicao.token))
-                    return Servico().Consulte();
-                else
-                    throw new Exception(Strings.InvalidToken);
+                if (RetorneToken() != Guid.Empty)
+                {
+                    return Ok(Servico().Consulte());
+                }
+
+                throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
-                return ObjetoErro(e);
+                return BadRequest(ObjetoErro(e));
             }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<object> Get(int id, [FromBody] ObjetoRequisicao<T> requisicao)
+        public ActionResult<T> Get(int id)
         {
             try
             {
-                if (ValidarToken(requisicao.token))
-                    return Servico().Consulte(id);
-                else
-                    throw new Exception(Strings.InvalidToken);
+                if (RetorneToken() != Guid.Empty)
+                {
+                    return Ok(Servico().Consulte(id));
+                }
+                   
+                throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
-                return ObjetoErro(e);
+                return BadRequest(ObjetoErro(e));
             }
         }
 
         [HttpPost()]
-        public ActionResult<object> Cadastre([FromBody] ObjetoRequisicao<T> requisicao)
+        public ActionResult<T> Cadastre([FromBody] T objeto)
         {
             try
             {
-                if (ValidarToken(requisicao.token))
-                    return Servico().Insert(requisicao.objeto);
-                else
-                    throw new Exception(Strings.InvalidToken);
+                if (RetorneToken() != Guid.Empty)
+                {
+                    Servico().Insert(objeto);
+                    return Ok(Strings.Sucess);
+                }
+                    
+                throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
-                return ObjetoErro(e);
+                return BadRequest(ObjetoErro(e));
             }
         }
 
         [HttpPut()]
-        public ActionResult<object> Atualize([FromBody] ObjetoRequisicao<T> requisicao)
+        public ActionResult<object> Atualize([FromBody] T objeto)
         {
             try
             {
-                if (ValidarToken(requisicao.token))
-                    return Servico().Atualize(requisicao.objeto);
-                else
-                    throw new Exception(Strings.InvalidToken);
+                if (RetorneToken() != Guid.Empty)
+                {
+                    Servico().Atualize(objeto);
+                    return Ok(Strings.Sucess);
+                }
+                    
+                throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
-                return ObjetoErro(e);
+                return BadRequest(ObjetoErro(e));
             }
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<object> Delete(int id, [FromBody] ObjetoRequisicao<T> requisicao)
+        public ActionResult<T> Delete(int id)
         {
             try
             {
-                if (ValidarToken(requisicao.token))
-                    return Servico().Delete(id);
-                else
-                    throw new Exception(Strings.InvalidToken);
+                if (RetorneToken() != Guid.Empty)
+                {
+                    Servico().Delete(id);
+                    return Ok(Strings.Sucess);
+                }
+                    
+                throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
-                return ObjetoErro(e);
+                return BadRequest(ObjetoErro(e));
             }
         }
 
@@ -99,9 +112,14 @@ namespace ApiBancoLegal.Controllers
             return new ObjetoErro(e);
         }
 
-        private static bool ValidarToken(string token)
+        private Guid RetorneToken()
         {
-            return new ServicoLogin().ValidarToken(token);
+            if (Request.Headers.TryGetValue("Token", out var valoresHeader))
+            {
+                return Guid.Parse(valoresHeader.First());
+            }
+
+            return Guid.Empty;
         }
     }
 }

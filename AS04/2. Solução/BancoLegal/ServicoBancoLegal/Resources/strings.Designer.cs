@@ -295,6 +295,15 @@ namespace ServicoBancoLegal.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Operação realizada com sucesso!.
+        /// </summary>
+        public static string Sucess {
+            get {
+                return ResourceManager.GetString("Sucess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Seja muito bem vindo ao banco legal!.
         /// </summary>
         public static string Welcome {

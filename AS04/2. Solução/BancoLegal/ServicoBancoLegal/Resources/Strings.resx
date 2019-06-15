@@ -141,6 +141,9 @@
   <data name="InvalidToken" xml:space="preserve">
     <value>Token inválido!</value>
   </data>
+  <data name="Sucess" xml:space="preserve">
+    <value>Operação realizada com sucesso!</value>
+  </data>
   <data name="LoginFailed" xml:space="preserve">
     <value>Falha ao efetuar o login, verifique o arquivo importado.</value>
   </data>
