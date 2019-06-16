@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import * as Map from './Maps'
+import { withRouter } from "react-router-dom";
 
 class CadastrarPessoa extends React.Component {
     constructor(props) {
@@ -84,4 +85,4 @@ const mapStateToProps = (store) => {
     }
   }
 
-export default connect(mapStateToProps, Map.mapDispatchToProps)(CadastrarPessoa);
+export default withRouter(connect(mapStateToProps, Map.mapDispatchToProps)(CadastrarPessoa));

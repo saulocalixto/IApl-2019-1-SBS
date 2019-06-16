@@ -5,6 +5,10 @@ export const initialStatePessoa = {
   pessoas: []
 };
 
+export const initialStateSessao = {
+    token: ''
+  };
+
 function pessoaReducer(state = initialStatePessoa, action) {
     let pessoas = []
     switch (action.type) {
@@ -21,4 +25,20 @@ function pessoaReducer(state = initialStatePessoa, action) {
     }
 }
 
-export default pessoaReducer;
+function sessaoReducer(state = initialStateSessao, action) {
+    let token = '';
+    switch (action.type) {
+        case 'FAZER_LOGIN':
+            token = action.token !== undefined ? action.token : '';
+            return {
+                ...state,
+                token,
+            };
+        default:
+            return {
+                ...state
+            }
+    }
+}
+
+export default combineReducers( {pessoaReducer, sessaoReducer} );

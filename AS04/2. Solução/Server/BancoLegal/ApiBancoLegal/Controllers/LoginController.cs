@@ -5,12 +5,14 @@ using ServicoBancoLegal.Resources;
 using ServicoBancoLegal.Servico;
 using System;
 using ApiBancoLegal.RequestObjects;
+using Microsoft.AspNetCore.Cors;
 using ServicoBancoLegal.Model.SessaoModel;
 
 namespace ApiBancoLegal.Controllers
 {
     [ApiController]
     [Route("api/login")]
+    [EnableCors("SiteCorsPolicy")]
     public class LoginController : ControllerBase
     {
         [HttpPost]
