@@ -82,7 +82,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
 
         protected override string StringDeInsert()
         {
-            return "Insert into SESSAO(ID, IDCONTA, TOKEN, INTER) Values(@id, @idConta, @token, @inter);";
+            return "Insert into SESSAO(IDCONTA, TOKEN, INTER) Values(@idConta, @token, @inter);";
         }
 
         protected override string StringDeUpdate()

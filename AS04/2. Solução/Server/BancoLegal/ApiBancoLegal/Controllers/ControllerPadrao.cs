@@ -5,11 +5,13 @@ using ServicoBancoLegal.Resources;
 using ServicoBancoLegal.Servico;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Cors;
 
 namespace ApiBancoLegal.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [EnableCors("SiteCorsPolicy")]
     public abstract class ControllerPadrao<T> : ControllerBase where T : ObjetoPadrao
     {
         [HttpGet]

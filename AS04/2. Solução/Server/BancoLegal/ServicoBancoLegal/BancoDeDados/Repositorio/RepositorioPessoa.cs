@@ -40,7 +40,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
 
         protected override string StringDeInsert()
         {
-            return "Insert into PESSOA (ID, NOME, EMAIL, CPF, DATANASCIMENTO, ENDERECO) Values (@id, @nome, @email, @cpf, @data, @endereco);";
+            return "Insert into PESSOA (NOME, EMAIL, CPF, DATANASCIMENTO, ENDERECO) Values (@nome, @email, @cpf, @data, @endereco);";
         }
 
         protected override string StringDeUpdate()

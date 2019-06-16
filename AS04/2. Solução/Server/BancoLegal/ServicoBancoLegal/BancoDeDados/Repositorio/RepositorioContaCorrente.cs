@@ -46,8 +46,8 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
 
         protected override string StringDeInsert()
         {
-            return "Insert into CONTA (ID, NUMERO, AGENCIA, TITULAR, SENHA," +
-                " SALDO, LIMITE, STATUS, TIPO) Values (@id, @numero, @agencia, @titular, @senha, @saldo, @limite, @status, 1);";
+            return "Insert into CONTA (NUMERO, AGENCIA, TITULAR, SENHA," +
+                " SALDO, LIMITE, STATUS, TIPO) Values (@numero, @agencia, @titular, @senha, @saldo, @limite, @status, 1);";
         }
 
         protected override string StringDeUpdate()
@@ -90,7 +90,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
 
         private string ConsulteContaPorEmailESenha(string senha, string eMail)
         {
-            return String.Format("SELECT TITULAR FROM CONTA INNER JOIN PESSOA ON CONTA.TITULAR = PESSOA.ID WHERE SENHA = '{0}' and EMAIL = '{1}';", senha, eMail);
+            return $"SELECT TITULAR FROM CONTA INNER JOIN PESSOA ON CONTA.TITULAR = PESSOA.ID WHERE SENHA = '{senha}' and EMAIL = '{eMail}';";
         }
     }
 }

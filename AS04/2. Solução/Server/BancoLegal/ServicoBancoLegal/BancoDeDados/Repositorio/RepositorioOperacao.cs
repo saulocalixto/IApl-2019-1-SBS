@@ -46,7 +46,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
 
         protected override string StringDeInsert()
         {
-            return "Insert into OPERACAO(ID, TIPO, VALOR, DATA, ORIGEM, DESTINO) Values(@id, @tipo, @valor, @data, @origem, @destino);";
+            return "Insert into OPERACAO(TIPO, VALOR, DATA, ORIGEM, DESTINO) Values(@tipo, @valor, @data, @origem, @destino);";
         }
 
         protected override string StringDeUpdate()

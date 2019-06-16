@@ -17,3 +17,5 @@ Insert into OPERACAO (ID, TIPO, VALOR, DATA, ORIGEM, DESTINO) Values (2, 2, 358,
 Insert into OPERACAO (ID, TIPO, VALOR, DATA, ORIGEM, DESTINO) Values (3, 1, 256, '2019-05-05', 2, 4);
 Insert into OPERACAO (ID, TIPO, VALOR, DATA, ORIGEM, DESTINO) Values (4, 2, 900, '2019-02-03', 3, 3);
 Insert into OPERACAO (ID, TIPO, VALOR, DATA, ORIGEM, DESTINO) Values (5, 2, 100, '2019-02-03', 3, 3);
+
+Insert into SESSAO (IDCONTA, TOKEN, INTER) VALUES (1, '459c1d6c-d3e1-4daa-b0e3-bfbdb1f310ad', 0);
