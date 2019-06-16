@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Text;
 using MySql.Data.MySqlClient;
 using ServicoBancoLegal.Model.ContaModel;
+using ServicoBancoLegal.Resources;
 
 namespace ServicoBancoLegal.BancoDeDados.Repositorio
 {
@@ -63,6 +65,32 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         protected override string NomeTabela()
         {
             return "CONTA";
+        }
+
+        public int RetorneIdDaConta(string senha, string email)
+        {
+            using (var conn = new MySqlConnection(stringConexao))
+            {
+                conn.Open();
+
+                using (var cmd = new MySqlCommand(ConsulteContaPorEmailESenha(senha, email), conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return reader.GetInt32(0);
+                        }
+
+                        throw new Exception(Strings.LoginFailed);
+                    }
+                }
+            }
+        }
+
+        private string ConsulteContaPorEmailESenha(string senha, string eMail)
+        {
+            return String.Format("SELECT TITULAR FROM CONTA INNER JOIN PESSOA ON CONTA.TITULAR = PESSOA.ID WHERE SENHA = '{0}' and EMAIL = '{1}';", senha, eMail);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         {
             cmd.Parameters.AddWithValue("@id", pessoa.Id);
             cmd.Parameters.AddWithValue("@nome", pessoa.Nome);
+            cmd.Parameters.AddWithValue("@email", pessoa.Email);
             cmd.Parameters.AddWithValue("@cpf", pessoa.Cpf);
             cmd.Parameters.AddWithValue("@data", pessoa.DataNascimento);
             cmd.Parameters.AddWithValue("@endereco", pessoa.Endereco);
@@ -26,9 +27,10 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
                 {
                     Id = reader.GetInt32(0),
                     Nome = reader.GetString(1),
-                    Cpf = reader.GetString(2),
-                    DataNascimento = reader.GetDateTime(3),
-                    Endereco = reader.GetString(4)
+                    Email = reader.GetString(2),
+                    Cpf = reader.GetString(3),
+                    DataNascimento = reader.GetDateTime(4),
+                    Endereco = reader.GetString(5)
                 };
 
                 lista.Add(pessoa);
@@ -38,7 +40,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
 
         protected override string StringDeInsert()
         {
-            return "Insert into PESSOA (ID, NOME, CPF, DATANASCIMENTO, ENDERECO) Values (@id, @nome, @cpf, @data, @endereco);";
+            return "Insert into PESSOA (ID, NOME, EMAIL, CPF, DATANASCIMENTO, ENDERECO) Values (@id, @nome, @email, @cpf, @data, @endereco);";
         }
 
         protected override string StringDeUpdate()
@@ -48,6 +50,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
             query.Append("UPDATE PESSOA ")
                 .AppendLine("SET Nome = @nome,")
                 .AppendLine("CPF = @cpf,")
+                .AppendLine("EMAIL = @email,")
                 .AppendLine("DATANASCIMENTO = @data,")
                 .AppendLine("ENDERECO = @endereco")
                 .AppendLine("WHERE ID = @id");

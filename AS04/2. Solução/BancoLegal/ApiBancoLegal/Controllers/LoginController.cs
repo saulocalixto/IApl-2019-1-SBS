@@ -4,6 +4,8 @@ using ServicoBancoLegal.Model.LoginModel;
 using ServicoBancoLegal.Resources;
 using ServicoBancoLegal.Servico;
 using System;
+using ApiBancoLegal.RequestObjects;
+using ServicoBancoLegal.Model.SessaoModel;
 
 namespace ApiBancoLegal.Controllers
 {
@@ -11,18 +13,37 @@ namespace ApiBancoLegal.Controllers
     [Route("api/login")]
     public class LoginController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<object> Login([FromBody] Login login)
+        [HttpPost]
+        public ActionResult Login([FromBody] ObjetoValidacao login)
         {
-            var result = new ServicoLogin().EfetueLogin(login);
-            if (result)
+            try
             {
-                return new ServicoLogin().GerarToken(login.IdConta);
+                var idConta = ServicoContaCorrente().ConsulteIdDaConta(login.senha, login.email);
+
+                var sessao = new Sessao
+                {
+                    IdConta = idConta,
+                    Internacionalizacao = (EnumInternacionalizacao) login.internacionalizacao
+                };
+
+                var token = ServicoLogin().EfetueLogin(sessao);
+
+                return Ok(new { Token =  token });
             }
-            else
+            catch(Exception e)
             {
-                return new ObjetoErro(new Exception(Strings.InvalidPassword));
+                return BadRequest(new ObjetoErro(e));
             }
+        }
+
+        private ServicoContaCorrente ServicoContaCorrente()
+        {
+            return new ServicoContaCorrente();
+        }
+
+        private ServicoLogin ServicoLogin()
+        {
+            return new ServicoLogin();
         }
     }
 }

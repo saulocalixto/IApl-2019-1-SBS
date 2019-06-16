@@ -2,14 +2,10 @@
 
 namespace ApiBancoLegal.RequestObjects
 {
-    public class ObjetoRequisicao<T>
+    public class ObjetoValidacao
     {
-        public T objeto;
-        public string token;
-
-        public bool IsTokenValido()
-        {
-            return new ServicoLogin().ValidarToken(token);
-        }
+        public string email { get; set; }
+        public string senha { get; set; }
+        public int internacionalizacao { get; set; }
     }
 }

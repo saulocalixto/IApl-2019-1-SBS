@@ -133,7 +133,7 @@ namespace ServicoBancoLegal.Resources {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Falha ao efetuar o login, verifique o arquivo importado..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Falha ao efetuar o login, verifique email e senha informados..
         /// </summary>
         public static string LoginFailed {
             get {

@@ -9,5 +9,10 @@ namespace ServicoBancoLegal.Servico
         {
             return _repositorio ?? (_repositorio = new RepositorioContaCorrente());
         }
+
+        public int ConsulteIdDaConta(string senha, string email)
+        {
+            return ((RepositorioContaCorrente)Repositorio()).RetorneIdDaConta(senha, email);
+        }
     }
 }

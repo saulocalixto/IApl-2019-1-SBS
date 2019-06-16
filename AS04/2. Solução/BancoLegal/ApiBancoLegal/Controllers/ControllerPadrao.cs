@@ -17,7 +17,7 @@ namespace ApiBancoLegal.Controllers
         {
             try
             {
-                if (RetorneToken() != Guid.Empty)
+                if (ServicoLogin().TokenIsValid(RetorneToken()))
                 {
                     return Ok(Servico().Consulte());
                 }
@@ -35,7 +35,7 @@ namespace ApiBancoLegal.Controllers
         {
             try
             {
-                if (RetorneToken() != Guid.Empty)
+                if (ServicoLogin().TokenIsValid(RetorneToken()))
                 {
                     return Ok(Servico().Consulte(id));
                 }
@@ -53,7 +53,7 @@ namespace ApiBancoLegal.Controllers
         {
             try
             {
-                if (RetorneToken() != Guid.Empty)
+                if (ServicoLogin().TokenIsValid(RetorneToken()))
                 {
                     Servico().Insert(objeto);
                     return Ok(Strings.Sucess);
@@ -72,7 +72,7 @@ namespace ApiBancoLegal.Controllers
         {
             try
             {
-                if (RetorneToken() != Guid.Empty)
+                if (ServicoLogin().TokenIsValid(RetorneToken()))
                 {
                     Servico().Atualize(objeto);
                     return Ok(Strings.Sucess);
@@ -91,7 +91,7 @@ namespace ApiBancoLegal.Controllers
         {
             try
             {
-                if (RetorneToken() != Guid.Empty)
+                if (ServicoLogin().TokenIsValid(RetorneToken()))
                 {
                     Servico().Delete(id);
                     return Ok(Strings.Sucess);
@@ -120,6 +120,11 @@ namespace ApiBancoLegal.Controllers
             }
 
             return Guid.Empty;
+        }
+
+        private ServicoLogin ServicoLogin()
+        {
+            return new ServicoLogin();
         }
     }
 }

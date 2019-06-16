@@ -25,6 +25,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
 
                 lista.Add(operacao);
             }
+
             return lista;
         }
 
