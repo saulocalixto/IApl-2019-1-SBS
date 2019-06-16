@@ -9,39 +9,37 @@ http://bancolegal.azurewebsites.net/api/
 
 ## Login (/login)
 
-Para realizar todas as outras chamadas listadas, é necessário realizar um Login na plataforma. Utilizando o endpoint abaixo, a API retornará um token que deverá ser usado para validar a requisição.
+Para realizar todas as outras chamadas listadas, é necessário realizar um Login na plataforma. Utilizando o endpoint abaixo, a API retornará um token **que deverá ser usado para validar as demais requisições.**
 
-O token obtido deverá ser fornecido no body da requisição com dois parâmetros, 'token' e 'objeto'. Este último parâmetro deverá conter o objeto referente à requisição em chamadas do tipo POST e PUT. Em qualquer outra requisição, fornecer uma string vazia ("") é suficiente.
-
-```json
-{
-    "objeto": "",
-    "token": "91ba471b-82dc-4637-86d7-f5096ac826a7"
-}
-```
+O token obtido deverá ser fornecido no header de todas as requisições com a chave "Token".
 
 ### Endpoints
 
-* Realizar Login: GET /api/login
+* Realizar Login: POST/api/login
 
 ### Objeto de Exemplo
 
 ```json
 {
-    "IdConta": 1,
-    "Senha": "123456"
+    "email": "saulo@gmail.com",
+    "senha": "1234admin",
+    "internacionalizacao" : "0"
 }
 ```
+O objeto passado precisa ter um email e senha válidos para retornar o token. A internacionalização indica a linguagem do sistema, sendo:
+- 0 : PT-BR
+- 1 : EN
+- 2 : FR
 
 ## Conta (/conta)
 
 ### Endpoints
 
 * Consultar Todos: GET /api/conta
-* Consultar: GET /api/conta/1
+* Consultar: GET /api/conta/{id}
 * Cadastrar: POST /api/conta
 * Atualizar: PUT /api/conta
-* Apagar: DELETE /api/conta/1
+* Apagar: DELETE /api/conta/{id}
 
 ### Objeto de Exemplo
 
@@ -63,10 +61,10 @@ O token obtido deverá ser fornecido no body da requisição com dois parâmetro
 ### Endpoints
 
 * Consultar Todos: GET /api/operacao
-* Consultar: GET /api/operacao/1
+* Consultar: GET /api/operacao/{id}
 * Cadastrar: POST /api/operacao
 * Atualizar: PUT /api/operacao
-* Apagar: DELETE /api/operacao/1
+* Apagar: DELETE /api/operacao/{id}
 
 ### Objeto de Exemplo
 
@@ -86,10 +84,10 @@ O token obtido deverá ser fornecido no body da requisição com dois parâmetro
 ### Endpoints
 
 * Consultar Todos: GET /api/pessoa
-* Consultar: GET /api/pessoa/1
+* Consultar: GET /api/pessoa/{id}
 * Cadastrar: POST /api/pessoa
 * Atualizar: PUT /api/pessoa
-* Apagar: DELETE /api/pessoa/1
+* Apagar: DELETE /api/pessoa/{id}
 
 ### Objeto de Exemplo
 
@@ -97,6 +95,7 @@ O token obtido deverá ser fornecido no body da requisição com dois parâmetro
 {
     "nome": "Nome Completo",
     "cpf": "12345678900",
+    "email" : "email@gmail.com"
     "dataNascimento": "1990-09-18T00:00:00",
     "endereco": "Rua X n 123",
     "id": 1
