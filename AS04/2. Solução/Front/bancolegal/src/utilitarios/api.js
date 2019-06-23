@@ -1,4 +1,4 @@
-const api = "https://localhost:44388/api/"
+const api = "http://bancolegal.azurewebsites.net/api/"
 const headers = { 
     'Token': '459c1d6c-d3e1-4daa-b0e3-bfbdb1f310ad',
     'Content-Type': 'application/json'
