@@ -7,11 +7,11 @@ namespace ServicoBancoLegal.Servico.Utilitario
 {
     public class UtilitarioDeOperacoes
     {
-        private ContaCorrente _contaOrigem;
-        private ContaCorrente _contaDestino;
-        private Operacao _operacao;
+        private readonly ContaCorrente _contaOrigem;
+        private readonly ContaCorrente _contaDestino;
+        private readonly Operacao _operacao;
 
-        private ServicoContaCorrente _servicoContaCorrente;
+        private readonly ServicoContaCorrente _servicoContaCorrente;
 
         public UtilitarioDeOperacoes(Operacao operacao)
         {
@@ -44,11 +44,8 @@ namespace ServicoBancoLegal.Servico.Utilitario
                 _servicoContaCorrente.Atualize(_contaOrigem);
                 return true;
             }
-            else
-            {
-                Console.Error.WriteLine(Strings.NotEnoughFunds);
-                return false;
-            }
+
+            throw new Exception(Strings.NotEnoughFunds);
         }
 
         private bool OperacaoDeDeposito()
@@ -68,11 +65,8 @@ namespace ServicoBancoLegal.Servico.Utilitario
                 _servicoContaCorrente.Atualize(_contaDestino);
                 return true;
             }
-            else
-            {
-                Console.Error.WriteLine(Strings.NotEnoughFunds);
-                return false;
-            }
+
+            throw new Exception(Strings.NotEnoughFunds);
         }
     }
 }

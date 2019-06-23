@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
+using Microsoft.VisualBasic;
+using Strings = ServicoBancoLegal.Resources.Strings;
 
 namespace ServicoBancoLegal.BancoDeDados.Repositorio
 {
@@ -16,7 +18,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         /// </summary>
         /// <param name="id">Id do conceito consultado.</param>
         /// <returns>Retorna o objeto relacionado àquele conceito.</returns>
-        public T Consulte(int id)
+        public T Get(int id)
         {
             using (var conn = new MySqlConnection(stringConexao))
             {
@@ -57,7 +59,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         /// Cadastre um conceito.
         /// </summary>
         /// <param name="objeto">Objeto a ser cadastrado.</param>
-        public void Cadastre(T objeto)
+        public void Insert(T objeto)
         {
             ExecuteQuery(objeto, StringDeInsert());
         }
@@ -68,8 +70,16 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         /// <param name="id">Id do item a ser deletado.</param>
         public void Delete(int id)
         {
-            var query = StringDeDelete();
-            ExecuteQuery(string.Format(query, id));
+            try
+            {
+                var query = StringDeDelete();
+                ExecuteQuery(string.Format(query, id));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(Strings.DeleteError);
+            }
+            
         }
 
         /// <summary>
@@ -77,7 +87,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
         /// </summary>
         /// <param name="id">Id do item cadastrado.</param>
         /// <returns>Retorna se o item existe ou não.</returns>
-        public bool ExisteObjeto(int id)
+        public bool ObjectExists(int id)
         {
             try
             {
@@ -102,7 +112,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
             }
         }
 
-        public void Atualize(T objeto)
+        public void Update(T objeto)
         {
             try
             {

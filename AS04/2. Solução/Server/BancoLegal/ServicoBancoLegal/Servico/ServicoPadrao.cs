@@ -23,7 +23,7 @@ namespace ServicoBancoLegal.Servico
         {
             if (!ObjetoExiste(objeto.Id))
             {
-                Repositorio().Cadastre(objeto);
+                Repositorio().Insert(objeto);
             }
             else
             {
@@ -38,7 +38,7 @@ namespace ServicoBancoLegal.Servico
         /// <returns>Retorna a string que representa o objeto pesquisado.</returns>
         public T Consulte(int Id)
         {
-            T objeto = Repositorio().Consulte(Id);
+            T objeto = Repositorio().Get(Id);
 
             if (objeto == null || Id != objeto.Id)
             {
@@ -72,7 +72,7 @@ namespace ServicoBancoLegal.Servico
         {
             if (ObjetoExiste(objeto.Id))
             {
-                Repositorio().Atualize(objeto);
+                Repositorio().Update(objeto);
             }
             else
             {
@@ -87,7 +87,7 @@ namespace ServicoBancoLegal.Servico
         /// <returns>Retorna indicador de sua existência.</returns>
         public bool ObjetoExiste(int Id)
         {
-            return Repositorio().ExisteObjeto(Id);
+            return Repositorio().ObjectExists(Id);
         }
 
         public void Delete(int id)

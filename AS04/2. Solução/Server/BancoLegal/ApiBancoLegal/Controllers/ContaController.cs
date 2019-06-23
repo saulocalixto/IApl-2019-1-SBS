@@ -5,7 +5,7 @@ namespace ApiBancoLegal.Controllers
 {
     public class ContaController : ControllerPadrao<ContaCorrente>
     {
-        public override ServicoPadrao<ContaCorrente> Servico()
+        public override ServicoPadrao<ContaCorrente> Service()
         {
             return new ServicoContaCorrente();
         }

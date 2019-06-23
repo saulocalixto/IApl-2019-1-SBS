@@ -25,16 +25,17 @@ namespace ApiBancoLegal.Controllers
                 var sessao = new Sessao
                 {
                     IdConta = idConta,
-                    Internacionalizacao = (EnumInternacionalizacao) login.internacionalizacao
+                    Internacionalizacao = (EnumInternacionalizacao) login.internacionalizacao,
+                    Email = login.email
                 };
 
-                var token = ServicoLogin().EfetueLogin(sessao);
+                sessao.Token = ServicoLogin().EfetueLogin(sessao);
 
-                return Ok(new { Token =  token });
+                return Ok(ObjetoResult<Sessao>.ReturnResult(sessao, Strings.Sucess));
             }
             catch(Exception e)
             {
-                return BadRequest(new ObjetoErro(e));
+                return BadRequest(ObjetoResult<Sessao>.ReturnResultError(e));
             }
         }
 

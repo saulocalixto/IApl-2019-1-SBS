@@ -1,5 +1,4 @@
-import React, { Fragment } from "react";
-import { Field, reduxForm } from "redux-form";
+import React, { Component } from "react";
 import { Form, Header, Button } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -7,7 +6,7 @@ import { connect } from "react-redux";
 import * as Map from './Maps'
 import { withRouter } from "react-router-dom";
 
-class CadastrarPessoa extends React.Component {
+class CadastrarPessoa extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -39,7 +38,9 @@ class CadastrarPessoa extends React.Component {
             dataNascimento
         }
 
-        this.props.cadastrePessoa(pessoa);
+        this.props.cadastrePessoa(pessoa).then(() => {
+            this.props.history.push("/pessoas/")
+        })
     }
 
     render() {

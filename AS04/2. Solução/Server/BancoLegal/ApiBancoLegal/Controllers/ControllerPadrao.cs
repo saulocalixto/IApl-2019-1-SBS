@@ -19,16 +19,16 @@ namespace ApiBancoLegal.Controllers
         {
             try
             {
-                if (ServicoLogin().TokenIsValid(RetorneToken()))
+                if (ServiceLogin().TokenIsValid(RetorneToken()))
                 {
-                    return Ok(Servico().Consulte());
+                    return Ok(ObjetoResult<T>.ReturnResult(Service().Consulte(), Strings.Sucess));
                 }
 
                 throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
-                return BadRequest(ObjetoErro(e));
+                return BadRequest(ObjetoResult<T>.ReturnResultError(e));
             }
         }
 
@@ -37,54 +37,54 @@ namespace ApiBancoLegal.Controllers
         {
             try
             {
-                if (ServicoLogin().TokenIsValid(RetorneToken()))
+                if (ServiceLogin().TokenIsValid(RetorneToken()))
                 {
-                    return Ok(Servico().Consulte(id));
+                    return Ok(ObjetoResult<T>.ReturnResult(Service().Consulte(id), Strings.Sucess));
                 }
                    
                 throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
-                return BadRequest(ObjetoErro(e));
+                return BadRequest(ObjetoResult<T>.ReturnResultError(e));
             }
         }
 
-        [HttpPost()]
+        [HttpPost]
         public ActionResult<T> Cadastre([FromBody] T objeto)
         {
             try
             {
-                if (ServicoLogin().TokenIsValid(RetorneToken()))
+                if (ServiceLogin().TokenIsValid(RetorneToken()))
                 {
-                    Servico().Insert(objeto);
-                    return Ok(Strings.Sucess);
+                    ExecuteServiceInsert(objeto);
+                    return Ok(ObjetoResult<T>.ReturnResult(Strings.Sucess));
                 }
                     
                 throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
-                return BadRequest(ObjetoErro(e));
+                return BadRequest(ObjetoResult<T>.ReturnResultError(e));
             }
         }
 
-        [HttpPut()]
+        [HttpPut]
         public ActionResult<object> Atualize([FromBody] T objeto)
         {
             try
             {
-                if (ServicoLogin().TokenIsValid(RetorneToken()))
+                if (ServiceLogin().TokenIsValid(RetorneToken()))
                 {
-                    Servico().Atualize(objeto);
-                    return Ok(Strings.Sucess);
+                    Service().Atualize(objeto);
+                    return Ok(ObjetoResult<T>.ReturnResult(Strings.Sucess));
                 }
                     
                 throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
-                return BadRequest(ObjetoErro(e));
+                return BadRequest(ObjetoResult<T>.ReturnResultError(e));
             }
         }
 
@@ -93,25 +93,25 @@ namespace ApiBancoLegal.Controllers
         {
             try
             {
-                if (ServicoLogin().TokenIsValid(RetorneToken()))
+                if (ServiceLogin().TokenIsValid(RetorneToken()))
                 {
-                    Servico().Delete(id);
-                    return Ok(Strings.Sucess);
+                    Service().Delete(id);
+                    return Ok(ObjetoResult<T>.ReturnResult(Strings.Sucess));
                 }
                     
                 throw new Exception(Strings.InvalidToken);
             }
             catch (Exception e)
             {
-                return BadRequest(ObjetoErro(e));
+                return BadRequest(ObjetoResult<T>.ReturnResultError(e));
             }
         }
 
-        public abstract ServicoPadrao<T> Servico();
+        public abstract ServicoPadrao<T> Service();
 
-        private static ActionResult<object> ObjetoErro(Exception e)
+        protected virtual void ExecuteServiceInsert(T obj)
         {
-            return new ObjetoErro(e);
+            Service().Insert(obj);
         }
 
         private Guid RetorneToken()
@@ -124,7 +124,7 @@ namespace ApiBancoLegal.Controllers
             return Guid.Empty;
         }
 
-        private ServicoLogin ServicoLogin()
+        private ServicoLogin ServiceLogin()
         {
             return new ServicoLogin();
         }

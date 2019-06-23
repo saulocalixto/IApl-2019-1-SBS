@@ -11,12 +11,12 @@ namespace ServicoBancoLegal.Servico
 
         public Guid EfetueLogin(Sessao sessao)
         {
-            var token = Repositorio().GetToken(sessao.IdConta);
+            var token = Repository().GetToken(sessao.IdConta);
 
             if (token == Guid.Empty)
             {
                 sessao.Token = Guid.NewGuid();
-                Repositorio().Cadastre(sessao);
+                Repository().Insert(sessao);
                 token = sessao.Token;
             }
 
@@ -25,10 +25,10 @@ namespace ServicoBancoLegal.Servico
 
         public bool TokenIsValid(Guid token)
         {
-            return Repositorio().TokenIsValid(token);
+            return Repository().TokenIsValid(token);
         }
 
-        private RepositorioSessao Repositorio()
+        private RepositorioSessao Repository()
         {
             return _repositorioSessao ?? (_repositorioSessao = new RepositorioSessao());
         }

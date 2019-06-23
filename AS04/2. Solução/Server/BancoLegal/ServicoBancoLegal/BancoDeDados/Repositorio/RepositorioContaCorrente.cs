@@ -90,7 +90,7 @@ namespace ServicoBancoLegal.BancoDeDados.Repositorio
 
         private string ConsulteContaPorEmailESenha(string senha, string eMail)
         {
-            return $"SELECT TITULAR FROM CONTA INNER JOIN PESSOA ON CONTA.TITULAR = PESSOA.ID WHERE SENHA = '{senha}' and EMAIL = '{eMail}';";
+            return $"SELECT CONTA.ID FROM CONTA INNER JOIN PESSOA ON CONTA.TITULAR = PESSOA.ID WHERE SENHA = '{senha}' and EMAIL = '{eMail}';";
         }
     }
 }

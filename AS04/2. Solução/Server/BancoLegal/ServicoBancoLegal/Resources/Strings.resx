@@ -159,6 +159,9 @@
   <data name="ObjectsNotFound" xml:space="preserve">
     <value>Nenhum registro cadastrado no banco de dados.</value>
   </data>
+  <data name="DeleteError" xml:space="preserve">
+    <value>Ocorreu um erro, a operação de exclusão retornou uma falha, verifique se o arquivo existe ou se não está sendo referenciado por outro conceito.</value>
+  </data>
   <data name="OptionExit" xml:space="preserve">
     <value>Sair</value>
   </data>

@@ -88,6 +88,15 @@ namespace ServicoBancoLegal.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro, a operação de exclusão retornou uma falha, verifique se o arquivo existe ou se não está sendo referenciado por outro conceito..
+        /// </summary>
+        public static string DeleteError {
+            get {
+                return ResourceManager.GetString("DeleteError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Arquivo não pôde ser aberto, pois não existe..
         /// </summary>
         public static string FileNotFound {
