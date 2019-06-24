@@ -7,17 +7,23 @@ O sistema desenvolvido possui uma API REST que pode ser acessada em:
 http://bancolegal.azurewebsites.net/api/
 ```
 
+A página web de exemplo implementando as chamadas da api pode ser acessado em:
+
+```
+https://sitebancolegal.azurewebsites.net/
+```
+
 ## Login (/login)
 
 Para realizar todas as outras chamadas listadas, é necessário realizar um Login na plataforma. Utilizando o endpoint abaixo, a API retornará um token **que deverá ser usado para validar as demais requisições.**
 
-O token obtido deverá ser fornecido no header de todas as requisições com a chave "Token".
+Salientamos que a requisição de **/login** retorna um "Token" **que deve ser passado no Header de qualquer requisição abaixo listada**.
 
 ### Endpoints
 
 * Realizar Login: POST/api/login
 
-### Objeto de Exemplo
+### Exemplo de Body
 
 ```json
 {
@@ -41,7 +47,13 @@ O objeto passado precisa ter um email e senha válidos para retornar o token. A 
 * Atualizar: PUT /api/conta
 * Apagar: DELETE /api/conta/{id}
 
-### Objeto de Exemplo
+### Header - Exemplo de Token
+
+```
+Token: '459c1d6c-d3e1-4daa-b0e3-bfbdb1f310ad'
+```
+
+### Exemplo de Body
 
 ```json
 {
@@ -66,7 +78,13 @@ O objeto passado precisa ter um email e senha válidos para retornar o token. A 
 * Atualizar: PUT /api/operacao
 * Apagar: DELETE /api/operacao/{id}
 
-### Objeto de Exemplo
+### Header - Exemplo de Token
+
+```
+Token: '459c1d6c-d3e1-4daa-b0e3-bfbdb1f310ad'
+```
+
+### Exemplo de Body
 
 ```json
 {
@@ -89,7 +107,13 @@ O objeto passado precisa ter um email e senha válidos para retornar o token. A 
 * Atualizar: PUT /api/pessoa
 * Apagar: DELETE /api/pessoa/{id}
 
-### Objeto de Exemplo
+### Header - Exemplo de Token
+
+```
+Token: '459c1d6c-d3e1-4daa-b0e3-bfbdb1f310ad'
+```
+
+### Exemplo de Body
 
 ```json
 {
@@ -101,3 +125,40 @@ O objeto passado precisa ter um email e senha válidos para retornar o token. A 
     "id": 1
 }
 ```
+
+## Operação (/operacao)
+
+### Endpoints
+
+* Consultar Todos: GET /api/operacao
+* Consultar: GET /api/operacao/{id}
+* Cadastrar: POST /api/operacao
+
+### Header - Exemplo de Token
+
+```
+Token: '459c1d6c-d3e1-4daa-b0e3-bfbdb1f310ad'
+```
+
+### Exemplo de Body
+
+```json
+{
+    "tipo": 1,
+    "valor": 500,
+    "dataDaOperacao": "2019-01-01T00:00:00",
+    "contaOrigem": 1,
+    "contaDestino": 2,
+    "id": 1
+}
+```
+Valores válidos para tipo:
+- 0 : Saque
+- 1 : Transferência
+- 2 : Depósito
+
+## Considerações Finas
+
+* Toda requisição do tipo *Post* e *Put* necessitam **obrigatoriamente** de um objeto em seu *Body*
+* Nunca se esquecer do token de acesso em todas as requisições
+* Você é livre para usar a api
