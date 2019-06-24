@@ -3,15 +3,11 @@ Trabalho para a disciplina de Integração de Aplicações do Bacharelado em Eng
 
 O sistema desenvolvido possui uma API REST que pode ser acessada em:
 
-```
-http://bancolegal.azurewebsites.net/api/
-```
+[http://bancolegal.azurewebsites.net/api/](http://bancolegal.azurewebsites.net/api/)
 
 A página web de exemplo implementando as chamadas da api pode ser acessado em:
 
-```
-https://sitebancolegal.azurewebsites.net/
-```
+[https://sitebancolegal.azurewebsites.net/](https://sitebancolegal.azurewebsites.net/)
 
 ## Login (/login)
 
@@ -119,7 +115,7 @@ Token: '459c1d6c-d3e1-4daa-b0e3-bfbdb1f310ad'
 {
     "nome": "Nome Completo",
     "cpf": "12345678900",
-    "email" : "email@gmail.com"
+    "email" : "email@gmail.com",
     "dataNascimento": "1990-09-18T00:00:00",
     "endereco": "Rua X n 123",
     "id": 1
