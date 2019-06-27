@@ -63,35 +63,9 @@ Token: '459c1d6c-d3e1-4daa-b0e3-bfbdb1f310ad'
     "id": 1
 }
 ```
+### Observação
 
-## Operação (/operacao)
-
-### Endpoints
-
-* Consultar Todos: GET /api/operacao
-* Consultar: GET /api/operacao/{id}
-* Cadastrar: POST /api/operacao
-* Atualizar: PUT /api/operacao
-* Apagar: DELETE /api/operacao/{id}
-
-### Header - Exemplo de Token
-
-```
-Token: '459c1d6c-d3e1-4daa-b0e3-bfbdb1f310ad'
-```
-
-### Exemplo de Body
-
-```json
-{
-    "tipo": 1,
-    "valor": 500,
-    "dataDaOperacao": "2019-01-01T00:00:00",
-    "contaOrigem": 1,
-    "contaDestino": 2,
-    "id": 1
-}
-```
+O conceito *conta* só aceita update dos campos: *saldo* e *limite*.
 
 ## Pessoa (/pessoa)
 
